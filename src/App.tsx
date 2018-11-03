@@ -1,26 +1,130 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+/* @flow */
+import React, { Component } from "react";
+import "./App.css";
+import { PlayersContainer } from "./PlayersContainer";
+import SignUpContainer from "./SignUpContainer";
+import { PlayerProfile } from "./PlayerProfile";
+import { CurrentQuestionContainer } from "./CurrentQuestionContainer";
+import GameCreatorContainer from "./GameCreatorContainer";
+import QuestionCreatorContainer from "./QuestionCreatorContainer";
+import QuestionsContainer from "./QuestionsContainer";
+import { CurrentAnsweringUser } from "./CurrentAnsweringUser";
 
-class App extends Component {
+export type Roles = "host" | "player";
+
+interface IUserContext {
+  username: string | null;
+  userId: string | null;
+  role: Roles | null;
+}
+
+export const UserContext = React.createContext<IUserContext>({
+  username: null,
+  userId: null,
+  role: null
+});
+
+interface IGameContext {
+  gameId: string | null;
+  userAnsweringId: string | null;
+  setUserAnsweringId: (userId: string) => void;
+}
+
+export const GameContext = React.createContext<IGameContext>({
+  gameId: null,
+  userAnsweringId: null,
+  setUserAnsweringId: (userId: string) => {}
+});
+
+interface Props {}
+interface State {
+  username: string | null;
+  userId: string | null;
+  role: Roles | null;
+  gameId: string | null;
+  userAnsweringId: string | null;
+  setUserAnsweringId: (userId: string) => void;
+}
+
+class App extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      username: null,
+      userId: null,
+      role: null,
+      gameId: null,
+      userAnsweringId: null,
+      setUserAnsweringId: this.setUserAnswering
+    };
+  }
+  handleJoinGame = (
+    name: string,
+    userId: string,
+    role: Roles,
+    gameId: string
+  ) => {
+    this.setState(state => ({
+      username: name,
+      userId,
+      role,
+      gameId
+    }));
+  };
+
+  setGame = (gameId: string, role: Roles) => {
+    this.setState(state => ({
+      gameId,
+      role
+    }));
+  };
+
+  setUserAnswering = (userId: string) => {
+    this.setState({
+      userAnsweringId: userId
+    });
+  };
+
   render() {
+    const { gameId, username, role, userAnsweringId } = this.state;
+    const isHost = role === "host";
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <GameContext.Provider value={this.state}>
+        <div className="App">
+          <GameCreatorContainer
+            onJoinGameAsHost={(gameId: string) => this.setGame(gameId, "host")}
+          />
+          <SignUpContainer
+            onJoinGame={(username: string, userId: string, gameId: string) =>
+              this.handleJoinGame(username, userId, "player", gameId)
+            }
+          />
+
+          {gameId && (
+            <UserContext.Provider value={this.state}>
+              <h1>GameId : {gameId}</h1>
+
+              {isHost && <QuestionCreatorContainer gameId={gameId} />}
+
+              {isHost && <QuestionsContainer gameId={gameId} />}
+
+              <PlayersContainer gameId={gameId} />
+
+              {username && (
+                <React.Fragment>
+                  <h1>PlayerProfile</h1>
+                  <PlayerProfile />
+                </React.Fragment>
+              )}
+              <h1>Current Question</h1>
+              <CurrentQuestionContainer gameId={gameId} />
+              {userAnsweringId && (
+                <CurrentAnsweringUser userId={userAnsweringId} />
+              )}
+            </UserContext.Provider>
+          )}
+        </div>
+      </GameContext.Provider>
     );
   }
 }
