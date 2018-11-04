@@ -1,4 +1,7 @@
 .question {
-  border: 1px solid red;
-  margin: 50px;
+  margin: var(--medium-spacing);
+  padding: var(--small-spacing);
+  text-align: center;
+  background-color: var(--base3);
+  border-radius: var(--small-border-radius);
 }

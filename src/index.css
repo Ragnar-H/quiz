@@ -7,8 +7,10 @@
   --base6: #edcaa0;
   --positive: #bb15b4;
   --negative: #bb4c0d;
+  --small-spacing: 6px;
   --medium-spacing: 12px;
-  --medium-border-radius: 20px;
+  --small-border-radius: 12px;
+  --medium-border-radius: 24px;
 }
 
 html {
