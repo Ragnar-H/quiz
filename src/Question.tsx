@@ -1,6 +1,5 @@
 /* @flow */
 import React, { Component } from "react";
-import styles from "./Question.module.css";
 import { Cell } from "./Cell";
 
 interface Props {
