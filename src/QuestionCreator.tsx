@@ -74,6 +74,7 @@ export class QuestionCreator extends Component<Props, State> {
           <option value="Famous people">Famous people</option>
           <option value="Innovation">Innovation</option>
           <option value="Random">Random</option>
+          <option value="Spinoffs">Random</option>
         </select>
         <button type="submit">Submit</button>
       </form>
