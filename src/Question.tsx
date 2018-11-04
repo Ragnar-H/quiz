@@ -6,6 +6,7 @@ interface Props {
   questionId: string;
   questionText: string;
   answer: string;
+  points: number;
   onQuestionClick: (questionId: string) => void;
 }
 
@@ -16,11 +17,10 @@ export class Question extends Component<Props> {
     onQuestionClick(questionId);
   };
   render() {
-    const { questionText, answer } = this.props;
+    const { questionText, answer, points } = this.props;
     return (
       <div onClick={this.handleQuestionClick}>
-        <p>{questionText}</p>
-        <p>{answer}</p>
+        <p>{points}</p>
       </div>
     );
   }

@@ -46,6 +46,7 @@ export class QuestionsContainer extends Component<Props> {
                   questionId={question.id}
                   questionText={question.question}
                   answer={question.answer}
+                  points={question.points}
                   onQuestionClick={this.handleSetCurrentQuestion}
                 />
               ))}

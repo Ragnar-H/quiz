@@ -9,5 +9,6 @@ storiesOf("Components/Question", module).add("default", () => (
     questionText="Who is the president of Romania?"
     answer="James Bond"
     onQuestionClick={action("onQuestionClick")}
+    points={500}
   />
 ));

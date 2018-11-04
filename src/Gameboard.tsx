@@ -47,6 +47,7 @@ export class Gameboard extends React.Component<Props, State> {
                     questionText={question.question}
                     answer={question.answer}
                     onQuestionClick={this.handleSetCurrentQuestion}
+                    points={question.points}
                   />
                 </Cell>
               ))}
