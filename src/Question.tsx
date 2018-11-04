@@ -1,5 +1,6 @@
 /* @flow */
 import React, { Component } from "react";
+import styles from "./Question.module.css";
 
 interface Props {
   questionId: string;
@@ -17,10 +18,7 @@ export class Question extends Component<Props> {
   render() {
     const { questionText, answer } = this.props;
     return (
-      <div
-        onClick={this.handleQuestionClick}
-        style={{ border: "1px solid red", margin: "50px" }}
-      >
+      <div onClick={this.handleQuestionClick} className={styles.question}>
         <p>{questionText}</p>
         <p>{answer}</p>
       </div>
