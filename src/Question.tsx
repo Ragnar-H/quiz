@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from "react";
-import { Cell } from "./Cell";
+import styles from "./Question.module.css";
 
 interface Props {
   questionId: string;
@@ -17,9 +17,9 @@ export class Question extends Component<Props> {
     onQuestionClick(questionId);
   };
   render() {
-    const { questionText, answer, points } = this.props;
+    const { points } = this.props;
     return (
-      <div onClick={this.handleQuestionClick}>
+      <div onClick={this.handleQuestionClick} className={styles.question}>
         <p>{points}</p>
       </div>
     );

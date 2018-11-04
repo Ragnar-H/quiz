@@ -10,10 +10,9 @@ interface Props {
 
 export class Cell extends Component<Props> {
   render() {
-    const { onClick, column, row, children } = this.props;
+    const { column, row, children } = this.props;
     return (
       <div
-        onClick={onClick}
         className={styles.cell}
         style={{
           gridColumnStart: column,
