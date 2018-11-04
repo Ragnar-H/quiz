@@ -1,6 +1,7 @@
 /* @flow*/
 import React, { Component, SyntheticEvent } from "react";
 import { IQuestion } from "./QuestionsContainer";
+import shortid from "shortid";
 
 interface Props {
   onSubmitQuestion: (question: IQuestion) => void;
@@ -10,21 +11,26 @@ interface State {
   question: string;
   answer: string;
   category: string;
+  points: number;
 }
 
 export class QuestionCreator extends Component<Props, State> {
   state = {
     question: "",
     answer: "",
-    category: ""
+    category: "",
+    points: 0
   };
 
   handleAddQuestion = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.onSubmitQuestion({ ...this.state });
+    const id = shortid.generate();
+    this.props.onSubmitQuestion({ ...this.state, id });
     this.setState({
       question: "",
-      answer: ""
+      answer: "",
+      category: "",
+      points: 0
     });
   };
 
@@ -43,6 +49,12 @@ export class QuestionCreator extends Component<Props, State> {
   updateCategory = (e: SyntheticEvent<HTMLSelectElement>) => {
     this.setState({
       category: e.currentTarget.value
+    });
+  };
+
+  updatePoints = (e: SyntheticEvent<HTMLSelectElement>) => {
+    this.setState({
+      points: parseInt(e.currentTarget.value, 10)
     });
   };
 
@@ -67,7 +79,7 @@ export class QuestionCreator extends Component<Props, State> {
           name="category"
           placeholder="What is the Southstar"
           onChange={this.updateCategory}
-          value={this.state.answer}
+          value={this.state.category}
         >
           <option value="Leo">Leo</option>
           <option value="Technology">Technology</option>
@@ -76,6 +88,19 @@ export class QuestionCreator extends Component<Props, State> {
           <option value="Random">Random</option>
           <option value="Spinoffs">Random</option>
         </select>
+
+        <select
+          name="points"
+          onChange={this.updatePoints}
+          value={this.state.points}
+        >
+          <option value={200}>200</option>
+          <option value={400}>400</option>
+          <option value={600}>600</option>
+          <option value={800}>800</option>
+          <option value={1000}>1000</option>
+        </select>
+
         <button type="submit">Submit</button>
       </form>
     );

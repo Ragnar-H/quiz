@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from "react";
-import { FirestoreCollection, withFirestore } from "react-firestore";
+import { FirestoreCollection, withFirestore, FireStore } from "react-firestore";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
 import { Question } from "./Question";
 
@@ -10,14 +10,11 @@ interface Props {
 }
 
 export interface IQuestion {
+  id: string;
   answer: string;
   question: string;
   category: string;
   points: number;
-}
-
-interface IQuestionAPI extends IQuestion {
-  id: string;
 }
 
 export class QuestionsContainer extends Component<Props> {
@@ -43,7 +40,7 @@ export class QuestionsContainer extends Component<Props> {
           ) : (
             <div>
               <h1>List of questions</h1>
-              {data.map((question: IQuestionAPI) => (
+              {data.map((question: IQuestion) => (
                 <Question
                   key={question.id}
                   questionId={question.id}

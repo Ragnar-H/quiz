@@ -18,10 +18,10 @@ export class Question extends Component<Props> {
   render() {
     const { questionText, answer } = this.props;
     return (
-      <Cell onClick={this.handleQuestionClick}>
+      <div onClick={this.handleQuestionClick}>
         <p>{questionText}</p>
         <p>{answer}</p>
-      </Cell>
+      </div>
     );
   }
 }

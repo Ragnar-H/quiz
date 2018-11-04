@@ -12,7 +12,13 @@ const CATEGORIES = [
   "Spinoffs"
 ];
 const QUESTIONS = Questions;
+const FIRESTORE = {};
 
 storiesOf("Components/Gameboard", module).add("default", () => (
-  <Gameboard categories={CATEGORIES} questions={QUESTIONS} />
+  <Gameboard
+    gameId="some-game-id"
+    firestore={FIRESTORE}
+    categories={CATEGORIES}
+    questions={QUESTIONS}
+  />
 ));
