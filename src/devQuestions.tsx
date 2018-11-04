@@ -4,24 +4,40 @@ import { IQuestion } from "./QuestionsContainer";
 
 export const Questions: Array<IQuestion> = [
   {
+    question: "Potato",
+    answer: "What is amazing food?",
+    category: "Leo",
+    points: 500
+  },
+  {
     question: "Lion",
     answer: "What is the Leo Pharma logo?",
-    category: "Leo"
+    category: "Leo",
+    points: 300
   },
   {
     question: "Apple and NewSec",
     answer: "Who are our neighbours?",
-    category: "Trivia"
+    category: "Innovation",
+    points: 300
+  },
+  {
+    question: "Illum",
+    answer: "Who lives above us?",
+    category: "Innovation",
+    points: 700
   },
   {
     question: "Matt Avis",
     answer: "Who is the reigning Ping Pong champion?",
-    category: "Famous people"
+    category: "Famous people",
+    points: 300
   },
   {
     question: "Silkegade 8",
     answer: "What is the address of our office?",
-    category: "Random"
+    category: "Random",
+    points: 300
   }
 ];
 

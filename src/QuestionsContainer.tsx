@@ -13,6 +13,7 @@ export interface IQuestion {
   answer: string;
   question: string;
   category: string;
+  points: number;
 }
 
 interface IQuestionAPI extends IQuestion {
