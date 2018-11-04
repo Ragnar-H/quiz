@@ -9,10 +9,14 @@ interface Props {
   gameId: string;
 }
 
-interface IQuestion {
-  id: string;
+export interface IQuestion {
   answer: string;
   question: string;
+  category: string;
+}
+
+interface IQuestionAPI extends IQuestion {
+  id: string;
 }
 
 export class QuestionsContainer extends Component<Props> {
@@ -38,7 +42,7 @@ export class QuestionsContainer extends Component<Props> {
           ) : (
             <div>
               <h1>List of questions</h1>
-              {data.map((question: IQuestion) => (
+              {data.map((question: IQuestionAPI) => (
                 <Question
                   key={question.id}
                   questionId={question.id}

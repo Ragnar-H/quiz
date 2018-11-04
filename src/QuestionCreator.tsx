@@ -1,24 +1,27 @@
 /* @flow*/
 import React, { Component, SyntheticEvent } from "react";
+import { IQuestion } from "./QuestionsContainer";
 
 interface Props {
-  onSubmitQuestion: (question: string, answer: string) => void;
+  onSubmitQuestion: (question: IQuestion) => void;
 }
 
 interface State {
   question: string;
   answer: string;
+  category: string;
 }
 
 export class QuestionCreator extends Component<Props, State> {
   state = {
     question: "",
-    answer: ""
+    answer: "",
+    category: ""
   };
 
   handleAddQuestion = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.onSubmitQuestion(this.state.question, this.state.answer);
+    this.props.onSubmitQuestion({ ...this.state });
     this.setState({
       question: "",
       answer: ""
@@ -34,6 +37,12 @@ export class QuestionCreator extends Component<Props, State> {
   updateAnswer = (e: SyntheticEvent<HTMLInputElement>) => {
     this.setState({
       answer: e.currentTarget.value
+    });
+  };
+
+  updateCategory = (e: SyntheticEvent<HTMLSelectElement>) => {
+    this.setState({
+      category: e.currentTarget.value
     });
   };
 
@@ -54,6 +63,18 @@ export class QuestionCreator extends Component<Props, State> {
           onChange={this.updateAnswer}
           value={this.state.answer}
         />
+        <select
+          name="category"
+          placeholder="What is the Southstar"
+          onChange={this.updateCategory}
+          value={this.state.answer}
+        >
+          <option value="Leo">Leo</option>
+          <option value="Technology">Technology</option>
+          <option value="Famous people">Famous people</option>
+          <option value="Innovation">Innovation</option>
+          <option value="Random">Random</option>
+        </select>
         <button type="submit">Submit</button>
       </form>
     );
