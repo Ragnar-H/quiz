@@ -1,7 +1,10 @@
 .cell {
+  display: flex;
   margin: var(--medium-spacing);
   padding: var(--small-spacing);
   text-align: center;
+  justify-content: center;
+  align-items: center;
   background-color: var(--base3);
   border-radius: var(--small-border-radius);
 }
