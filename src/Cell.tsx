@@ -3,14 +3,23 @@ import styles from "./Cell.module.css";
 
 interface Props {
   children: React.ReactNode;
+  column?: number;
+  row?: number;
   onClick?: any;
 }
 
 export class Cell extends Component<Props> {
   render() {
-    const { onClick, children } = this.props;
+    const { onClick, column, row, children } = this.props;
     return (
-      <div onClick={onClick} className={styles.cell}>
+      <div
+        onClick={onClick}
+        className={styles.cell}
+        style={{
+          gridColumnStart: column,
+          gridRowStart: row
+        }}
+      >
         {children}
       </div>
     );
