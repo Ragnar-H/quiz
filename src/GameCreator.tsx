@@ -5,9 +5,6 @@ interface Props {
   onJoinGameAsHost: (gameId: string) => void;
   onGameCreation: () => Promise<void>;
 }
-interface NamedInput {
-  target: { name: string };
-}
 
 interface State {
   gameId: string;
