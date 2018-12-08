@@ -1,54 +1,46 @@
 /* @flow*/
 import React, { Component, SyntheticEvent } from "react";
-import { IQuestion } from "./QuestionsContainer";
 import shortid from "shortid";
 
 interface Props {
   onSubmitQuestion: (question: IQuestion) => void;
+  category: ICategory;
 }
 
 interface State {
-  question: string;
+  text: string;
   answer: string;
-  category: string;
   points: number;
 }
 
 export class QuestionCreator extends Component<Props, State> {
   state = {
-    question: "",
+    text: "",
     answer: "",
-    category: "",
     points: 0
   };
 
   handleAddQuestion = (e: SyntheticEvent<HTMLFormElement>) => {
+    const { category, onSubmitQuestion } = this.props;
     e.preventDefault();
     const id = shortid.generate();
-    this.props.onSubmitQuestion({ ...this.state, id });
+    onSubmitQuestion({ ...this.state, category, id });
     this.setState({
-      question: "",
+      text: "",
       answer: "",
-      category: "",
       points: 0
     });
   };
 
   updateQuestion = (e: SyntheticEvent<HTMLInputElement>) => {
     this.setState({
-      question: e.currentTarget.value
+      text: e.currentTarget.value
     });
   };
 
   updateAnswer = (e: SyntheticEvent<HTMLInputElement>) => {
     this.setState({
       answer: e.currentTarget.value
-    });
-  };
-
-  updateCategory = (e: SyntheticEvent<HTMLSelectElement>) => {
-    this.setState({
-      category: e.currentTarget.value
     });
   };
 
@@ -66,7 +58,7 @@ export class QuestionCreator extends Component<Props, State> {
           name="question"
           placeholder="Diagnosis for everyone"
           onChange={this.updateQuestion}
-          value={this.state.question}
+          value={this.state.text}
         />
         <input
           type="text"
@@ -75,20 +67,6 @@ export class QuestionCreator extends Component<Props, State> {
           onChange={this.updateAnswer}
           value={this.state.answer}
         />
-        <select
-          name="category"
-          placeholder="What is the Southstar"
-          onChange={this.updateCategory}
-          value={this.state.category}
-        >
-          <option value="Leo">Leo</option>
-          <option value="Technology">Technology</option>
-          <option value="Famous people">Famous people</option>
-          <option value="Innovation">Innovation</option>
-          <option value="Random">Random</option>
-          <option value="Spinoffs">Random</option>
-        </select>
-
         <select
           name="points"
           onChange={this.updatePoints}

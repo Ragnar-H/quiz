@@ -104,7 +104,12 @@ class App extends Component<Props, State> {
             <UserContext.Provider value={this.state}>
               <h1>GameId : {gameId}</h1>
 
-              {isHost && <QuestionCreatorContainer gameId={gameId} />}
+              {isHost && (
+                <QuestionCreatorContainer
+                  gameId={gameId}
+                  category={{ name: "Leo internals", id: "some-id" }}
+                />
+              )}
 
               {isHost && <QuestionsContainer gameId={gameId} />}
 

@@ -1,13 +1,10 @@
 import React from "react";
 import { Cell } from "./Cell";
 import styles from "./Gameboard.module.css";
-import { IQuestion } from "./QuestionsContainer";
 import { Question } from "./Question";
 
-type Category = string;
-
 interface Props {
-  categories: Array<Category>;
+  categories: Array<ICategory>;
   questions: Array<IQuestion>;
   gameId: string;
   handleSetCurrentQuestion: (questionId: string) => void;
@@ -21,12 +18,12 @@ export class Gameboard extends React.Component<Props, State> {
     return (
       <div className={styles.gameboard}>
         {categories.map((category, categoryIndex) => (
-          <React.Fragment key={categoryIndex}>
+          <React.Fragment key={category.id}>
             <Cell row={1} column={categoryIndex}>
-              {category}
+              {category.name}
             </Cell>
             {questions
-              .filter(question => question.category === category)
+              .filter(question => question.category.id === category.id)
               .sort((a, b) => a.points - b.points)
               .map((question, questionIndex) => (
                 <Cell
@@ -36,7 +33,7 @@ export class Gameboard extends React.Component<Props, State> {
                 >
                   <Question
                     questionId={question.id}
-                    questionText={question.question}
+                    questionText={question.text}
                     answer={question.answer}
                     onQuestionClick={handleSetCurrentQuestion}
                     points={question.points}

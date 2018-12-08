@@ -9,14 +9,6 @@ interface Props {
   gameId: string;
 }
 
-export interface IQuestion {
-  id: string;
-  answer: string;
-  question: string;
-  category: string;
-  points: number;
-}
-
 export class QuestionsContainer extends Component<Props> {
   handleSetCurrentQuestion = (questionId: string) => {
     const { firestore, gameId } = this.props;
@@ -44,7 +36,7 @@ export class QuestionsContainer extends Component<Props> {
                 <Question
                   key={question.id}
                   questionId={question.id}
-                  questionText={question.question}
+                  questionText={question.text}
                   answer={question.answer}
                   points={question.points}
                   onQuestionClick={this.handleSetCurrentQuestion}

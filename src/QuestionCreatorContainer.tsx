@@ -3,11 +3,11 @@ import React, { Component } from "react";
 import { withFirestore } from "react-firestore";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
 import { QuestionCreator } from "./QuestionCreator";
-import { IQuestion } from "./QuestionsContainer";
 
 interface Props {
   firestore: any;
   gameId: string;
+  category: ICategory;
 }
 
 export class QuestionCreatorContainer extends Component<Props> {
@@ -21,7 +21,10 @@ export class QuestionCreatorContainer extends Component<Props> {
   render() {
     return (
       <div>
-        <QuestionCreator onSubmitQuestion={this.handleSubmitQuestion} />
+        <QuestionCreator
+          category={this.props.category}
+          onSubmitQuestion={this.handleSubmitQuestion}
+        />
       </div>
     );
   }

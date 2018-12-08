@@ -1,47 +1,55 @@
 /* @flow */
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
-import { IQuestion } from "./QuestionsContainer";
+
+export const CATEGORIES = [
+  { name: "Leo", id: "category-0" },
+  { name: "Technology", id: "category-1" },
+  { name: "Famous people", id: "category-2" },
+  { name: "Innovation", id: "category-3" },
+  { name: "Random", id: "category-4" },
+  { name: "Spinoffs", id: "category-5" }
+];
 
 export const Questions: Array<IQuestion> = [
   {
-    question: "Potato",
+    text: "Potato",
     answer: "What is amazing food?",
-    category: "Leo",
+    category: CATEGORIES[0],
     points: 500,
     id: "123"
   },
   {
-    question: "Lion",
+    text: "Lion",
     answer: "What is the Leo Pharma logo?",
-    category: "Leo",
+    category: CATEGORIES[0],
     points: 300,
     id: "124"
   },
   {
-    question: "Apple and NewSec",
+    text: "Apple and NewSec",
     answer: "Who are our neighbours?",
-    category: "Innovation",
+    category: CATEGORIES[1],
     points: 300,
     id: "125"
   },
   {
-    question: "Illum",
+    text: "Illum",
     answer: "Who lives above us?",
-    category: "Innovation",
+    category: CATEGORIES[1],
     points: 700,
     id: "126"
   },
   {
-    question: "Matt Avis",
+    text: "Matt Avis",
     answer: "Who is the reigning Ping Pong champion?",
-    category: "Famous people",
+    category: CATEGORIES[4],
     points: 300,
     id: "127"
   },
   {
-    question: "Silkegade 8",
+    text: "Silkegade 8",
     answer: "What is the address of our office?",
-    category: "Random",
+    category: CATEGORIES[3],
     points: 300,
     id: "128"
   }
