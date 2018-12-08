@@ -9,7 +9,7 @@
   --negative: #bb4c0d;
   --small-spacing: 6px;
   --medium-spacing: 12px;
-  --small-border-radius: 12px;
+  --small-border-radius: 6px;
   --medium-border-radius: 24px;
 }
 
@@ -38,4 +38,25 @@ code {
   padding: var(--medium-spacing);
   margin: var(--medium-spacing);
   border-radius: var(--medium-border-radius);
+}
+
+.inputWrapper {
+  height: calc(var(--small-spacing) * 4);
+}
+
+input,
+button,
+select {
+  height: calc(var(--small-spacing) * 8);
+  border-radius: var(--small-border-radius);
+  border: none;
+  padding: 0 calc(var(--small-spacing) * 3);
+  min-width: calc(var(--small-spacing) * 20);
+  margin: 0 var(--small-spacing);
+  background: #fff;
+  text-align: center;
+}
+
+option {
+  padding: var(--small-spacing);
 }
