@@ -7,4 +7,9 @@
   align-items: center;
   background-color: var(--base3);
   border-radius: var(--small-border-radius);
+  cursor: pointer;
+}
+
+.cell:hover {
+  opacity: 0.8;
 }
