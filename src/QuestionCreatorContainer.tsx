@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { withFirestore } from "react-firestore";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
 import { QuestionCreator } from "./QuestionCreator";
-
 interface Props {
   firestore: any;
   gameId: string;

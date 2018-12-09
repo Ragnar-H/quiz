@@ -1,19 +1,23 @@
 /* @flow */
-import React, { Component } from "react";
-import { withFirestore } from "react-firestore";
+import React, { useContext } from "react";
 import shortid from "shortid";
 import { GameCreator } from "./GameCreator";
 import { GAME_PATH } from "./firebasePaths";
 import { loadStaticQuestionsToFirestore } from "./devQuestions";
+import { FirebaseContext } from ".";
+// 1. Get this component to work with hooks
+// 2. Generalize and pull into custom Hook
+// 3. Profit
 
 interface Props {
-  firestore: any;
   onJoinGameAsHost: (gameId: string) => void;
 }
 
-export class GameCreatorContainer extends Component<Props> {
-  handleGameCreation = async () => {
-    const { firestore, onJoinGameAsHost } = this.props;
+export function GameCreatorContainer(props: Props) {
+  const { onJoinGameAsHost } = props;
+  const { firestore } = useContext(FirebaseContext);
+
+  const handleGameCreation = async () => {
     const gameId = shortid.generate();
     await firestore
       .collection(GAME_PATH)
@@ -27,15 +31,10 @@ export class GameCreatorContainer extends Component<Props> {
     await loadStaticQuestionsToFirestore(firestore, gameId);
   };
 
-  render() {
-    const { onJoinGameAsHost } = this.props;
-    return (
-      <GameCreator
-        onJoinGameAsHost={onJoinGameAsHost}
-        onGameCreation={this.handleGameCreation}
-      />
-    );
-  }
+  return (
+    <GameCreator
+      onJoinGameAsHost={onJoinGameAsHost}
+      onGameCreation={handleGameCreation}
+    />
+  );
 }
-
-export default withFirestore(GameCreatorContainer);

@@ -8,6 +8,11 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+const root = document.getElementById("root");
+if (root == null) {
+  throw new Error("No root element found. App will not start");
+}
+
 var config = {
   apiKey: "AIzaSyAwrOGpG_EC5OewGY7DgTMZr8Pwu3wa1gc",
   authDomain: "ilab-quiz.firebaseapp.com",
@@ -21,14 +26,16 @@ const firestore = firebase.firestore();
 const settings = { timestampsInSnapshots: true };
 firestore.settings(settings);
 
-const root = document.getElementById("root");
-if (root == null) {
-  throw new Error("No root element found. App will not start");
-}
+export const FirebaseContext = React.createContext<{
+  firestore: firebase.firestore.Firestore;
+}>({ firestore });
+
 ReactDOM.render(
-  <FirestoreProvider firebase={firebase}>
-    <App />
-  </FirestoreProvider>,
+  <FirebaseContext.Provider value={{ firestore }}>
+    <FirestoreProvider firebase={firebase}>
+      <App />
+    </FirestoreProvider>
+  </FirebaseContext.Provider>,
   root
 );
 
