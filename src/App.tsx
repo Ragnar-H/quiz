@@ -7,7 +7,7 @@ import { PlayerProfile } from "./PlayerProfile";
 import { CurrentQuestionContainer } from "./CurrentQuestionContainer";
 import { GameCreatorContainer } from "./GameCreatorContainer";
 import { QuestionCreatorContainer } from "./QuestionCreatorContainer";
-import QuestionsContainer from "./QuestionsContainer";
+import { QuestionsContainer } from "./QuestionsContainer";
 import { CurrentAnsweringUser } from "./CurrentAnsweringUser";
 
 export type Roles = "host" | "player";
