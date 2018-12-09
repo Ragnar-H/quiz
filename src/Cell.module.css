@@ -1,5 +1,6 @@
 .cell {
   display: flex;
+  min-height: calc(var(--small-spacing) * 10);
   margin: var(--medium-spacing);
   padding: var(--small-spacing);
   text-align: center;
