@@ -1,21 +1,20 @@
 /* @flow */
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import firebase from "firebase/app";
-import { withFirestore } from "react-firestore";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
+import { FirebaseContext } from ".";
 
 interface Props {
-  firestore: any;
   questionId: string;
   username: string;
   userId: string;
   gameId: string;
 }
 
-export class BuzzerContainer extends Component<Props> {
-  handleBuzz = () => {
-    const { firestore, questionId, username, userId, gameId } = this.props;
-
+export function BuzzerContainer(props: Props) {
+  const { questionId, username, userId, gameId } = props;
+  const { firestore } = useContext(FirebaseContext);
+  const handleBuzz = () => {
     firestore
       .collection(`${GAME_PATH}${gameId}/${QUESTION_PATH}${questionId}/buzzes`)
       .add({
@@ -24,13 +23,9 @@ export class BuzzerContainer extends Component<Props> {
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       });
   };
-  render() {
-    return (
-      <div>
-        <button onClick={this.handleBuzz}>Buzz!</button>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <button onClick={handleBuzz}>Buzz!</button>
+    </div>
+  );
 }
-
-export default withFirestore(BuzzerContainer);

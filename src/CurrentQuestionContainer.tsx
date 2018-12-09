@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { FirestoreDocument } from "react-firestore";
 import { QuestionContainer } from "./QuestionContainer";
 import { BuzzListContainer } from "./BuzzListContainer";
-import BuzzerContainer from "./BuzzerContainer";
+import { BuzzerContainer } from "./BuzzerContainer";
 import { UserContext } from "./App";
 import { GAME_PATH } from "./firebasePaths";
 
@@ -41,14 +41,16 @@ export class CurrentQuestionContainer extends Component<Props, State> {
                     <UserContext.Consumer>
                       {({ username, userId, role }) => (
                         <React.Fragment>
-                          {role === "player" && (
-                            <BuzzerContainer
-                              username={username}
-                              userId={userId}
-                              questionId={data.currentQuestionId}
-                              gameId={gameId}
-                            />
-                          )}
+                          {role === "player" &&
+                            username != null &&
+                            userId != null && (
+                              <BuzzerContainer
+                                username={username}
+                                userId={userId}
+                                questionId={data.currentQuestionId}
+                                gameId={gameId}
+                              />
+                            )}
                         </React.Fragment>
                       )}
                     </UserContext.Consumer>
