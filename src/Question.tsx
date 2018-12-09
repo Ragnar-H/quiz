@@ -1,5 +1,5 @@
 /* @flow */
-import React, { Component } from "react";
+import React from "react";
 import styles from "./Question.module.css";
 
 interface Props {
@@ -10,18 +10,16 @@ interface Props {
   onQuestionClick: (questionId: string) => void;
 }
 
-export class Question extends Component<Props> {
-  handleQuestionClick = () => {
-    const { questionId, onQuestionClick } = this.props;
-
+export function Question(props: Props) {
+  const handleQuestionClick = () => {
+    const { questionId, onQuestionClick } = props;
     onQuestionClick(questionId);
   };
-  render() {
-    const { points } = this.props;
-    return (
-      <div onClick={this.handleQuestionClick} className={styles.question}>
-        <p>{points}</p>
-      </div>
-    );
-  }
+
+  const { points } = props;
+  return (
+    <div onClick={handleQuestionClick} className={styles.question}>
+      <p>{points}</p>
+    </div>
+  );
 }
