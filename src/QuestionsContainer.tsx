@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from "react";
-import { FirestoreCollection, withFirestore, FireStore } from "react-firestore";
+import { FirestoreCollection, withFirestore } from "react-firestore";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
 import { Question } from "./Question";
 

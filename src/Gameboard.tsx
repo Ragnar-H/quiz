@@ -11,8 +11,6 @@ interface Props {
   editMode: boolean;
 }
 
-interface State {}
-
 export function Gameboard(props: Props) {
   const { categories, questions, handleSetCurrentQuestion, editMode } = props;
   return (
