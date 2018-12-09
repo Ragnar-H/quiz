@@ -8,12 +8,13 @@ interface Props {
   questions: Array<IQuestion>;
   gameId: string;
   handleSetCurrentQuestion: (questionId: string) => void;
+  editMode: boolean;
 }
 
 interface State {}
 
 export function Gameboard(props: Props) {
-  const { categories, questions, handleSetCurrentQuestion } = props;
+  const { categories, questions, handleSetCurrentQuestion, editMode } = props;
   return (
     <div className={styles.gameboard}>
       {categories.map((category, categoryIndex) => (
@@ -36,6 +37,7 @@ export function Gameboard(props: Props) {
                   answer={question.answer}
                   onQuestionClick={handleSetCurrentQuestion}
                   points={question.points}
+                  mode={editMode ? "editing" : "unanswered"}
                 />
               </Cell>
             ))}

@@ -34,6 +34,7 @@ export class QuestionsContainer extends Component<Props> {
               <h1>List of questions</h1>
               {data.map((question: IQuestion) => (
                 <Question
+                  mode="unanswered"
                   key={question.id}
                   questionId={question.id}
                   questionText={question.text}
