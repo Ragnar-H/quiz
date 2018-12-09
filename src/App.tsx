@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { PlayersContainer } from "./PlayersContainer";
-import SignUpContainer from "./SignUpContainer";
+import { SignUpContainer } from "./SignUpContainer";
 import { PlayerProfile } from "./PlayerProfile";
 import { CurrentQuestionContainer } from "./CurrentQuestionContainer";
 import { GameCreatorContainer } from "./GameCreatorContainer";

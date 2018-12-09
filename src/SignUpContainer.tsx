@@ -1,17 +1,18 @@
 /* @flow */
-import React, { Component } from "react";
-import { withFirestore } from "react-firestore";
+import React, { useContext } from "react";
 import { SignUp } from "./SignUp";
 import { GAME_PATH, PLAYER_PATH } from "./firebasePaths";
+import { FirebaseContext } from ".";
 
 interface Props {
-  firestore: any;
   onJoinGame: (username: string, userId: string, gameId: string) => void;
 }
 
-export class SignUpContainer extends Component<Props> {
-  handleSubmitUser = async (username: string, gameId: string) => {
-    const { firestore, onJoinGame } = this.props;
+export function SignUpContainer(props: Props) {
+  const { onJoinGame } = props;
+  const { firestore } = useContext(FirebaseContext);
+
+  const handleSubmitUser = async (username: string, gameId: string) => {
     const userDoc = await firestore
       .collection(`${GAME_PATH}${gameId}/${PLAYER_PATH}`)
       .add({
@@ -21,13 +22,9 @@ export class SignUpContainer extends Component<Props> {
     onJoinGame(username, userDoc.id, gameId);
   };
 
-  render() {
-    return (
-      <div>
-        <SignUp submitUser={this.handleSubmitUser} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <SignUp submitUser={handleSubmitUser} />
+    </div>
+  );
 }
-
-export default withFirestore(SignUpContainer);
