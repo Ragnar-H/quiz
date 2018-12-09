@@ -6,7 +6,7 @@ import SignUpContainer from "./SignUpContainer";
 import { PlayerProfile } from "./PlayerProfile";
 import { CurrentQuestionContainer } from "./CurrentQuestionContainer";
 import { GameCreatorContainer } from "./GameCreatorContainer";
-import QuestionCreatorContainer from "./QuestionCreatorContainer";
+import { QuestionCreatorContainer } from "./QuestionCreatorContainer";
 import QuestionsContainer from "./QuestionsContainer";
 import { CurrentAnsweringUser } from "./CurrentAnsweringUser";
 

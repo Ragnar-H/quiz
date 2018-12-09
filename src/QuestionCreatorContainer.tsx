@@ -1,32 +1,28 @@
 /* @flow */
-import React, { Component } from "react";
-import { withFirestore } from "react-firestore";
+import React, { useContext } from "react";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
 import { QuestionCreator } from "./QuestionCreator";
+import { FirebaseContext } from ".";
 interface Props {
-  firestore: any;
   gameId: string;
   category: ICategory;
 }
 
-export class QuestionCreatorContainer extends Component<Props> {
-  handleSubmitQuestion = (question: IQuestion) => {
-    const { firestore, gameId } = this.props;
+export function QuestionCreatorContainer(props: Props) {
+  const { gameId, category } = props;
+  const { firestore } = useContext(FirebaseContext);
+  const handleSubmitQuestion = (question: IQuestion) => {
     firestore.collection(`${GAME_PATH}${gameId}/${QUESTION_PATH}`).add({
       ...question
     });
   };
 
-  render() {
-    return (
-      <div>
-        <QuestionCreator
-          category={this.props.category}
-          onSubmitQuestion={this.handleSubmitQuestion}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <QuestionCreator
+        category={category}
+        onSubmitQuestion={handleSubmitQuestion}
+      />
+    </div>
+  );
 }
-
-export default withFirestore(QuestionCreatorContainer);
