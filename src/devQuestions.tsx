@@ -1,4 +1,4 @@
-import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
+import { GAME_PATH, QUESTION_PATH, CATEGORY_PATH } from "./firebasePaths";
 
 const INITIAL_QUESTION_TEXT = "Fill in this question";
 const INITIAL_ANSWER_TEXT = "Fill in the answer";
@@ -7,8 +7,22 @@ const QUESTION_POINT_ARRAY = [200, 400, 600, 800, 1000];
 export const Categories = createInitialCategories(6);
 export const Questions = createInitialQuestions(Categories, 5);
 
-export async function loadStaticQuestionsToFirestore(
-  firestore: any,
+export async function loadInitialCategoriesToFirestore(
+  firestore: firebase.firestore.Firestore,
+  gameId: string
+) {
+  let writeBatch = firestore.batch();
+  Categories.forEach(category => {
+    const docRef = firestore
+      .collection(`${GAME_PATH}${gameId}/${CATEGORY_PATH}`)
+      .doc(category.id);
+    writeBatch.set(docRef, category);
+  });
+  await writeBatch.commit();
+}
+
+export async function loadInitialQuestionsToFirestore(
+  firestore: firebase.firestore.Firestore,
   gameId: string
 ) {
   let writeBatch = firestore.batch();

@@ -2,7 +2,10 @@ import React, { useContext } from "react";
 import shortid from "shortid";
 import { GameCreator } from "./GameCreator";
 import { GAME_PATH } from "./firebasePaths";
-import { loadStaticQuestionsToFirestore } from "./devQuestions";
+import {
+  loadStaticQuestionsToFirestore,
+  loadInitialCategoriesToFirestore
+} from "./devQuestions";
 import { FirebaseContext } from ".";
 
 interface Props {
@@ -24,7 +27,10 @@ export function GameCreatorContainer(props: Props) {
 
     onJoinGameAsHost(gameId);
 
-    await loadStaticQuestionsToFirestore(firestore, gameId);
+    await Promise.all([
+      loadInitialCategoriesToFirestore(firestore, gameId),
+      loadStaticQuestionsToFirestore(firestore, gameId)
+    ]);
   };
 
   return (
