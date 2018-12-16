@@ -1,16 +1,6 @@
 .cell {
   display: flex;
   min-height: calc(var(--small-spacing) * 10);
-  margin: var(--medium-spacing);
-  padding: var(--small-spacing);
-  text-align: center;
   justify-content: center;
   align-items: center;
-  background-color: var(--base3);
-  border-radius: var(--small-border-radius);
-  cursor: pointer;
-}
-
-.cell:hover {
-  opacity: 0.8;
 }
