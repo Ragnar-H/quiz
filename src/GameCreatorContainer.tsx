@@ -4,9 +4,6 @@ import { GameCreator } from "./GameCreator";
 import { GAME_PATH } from "./firebasePaths";
 import { loadStaticQuestionsToFirestore } from "./devQuestions";
 import { FirebaseContext } from ".";
-// 1. Get this component to work with hooks
-// 2. Generalize and pull into custom Hook
-// 3. Profit
 
 interface Props {
   onJoinGameAsHost: (gameId: string) => void;
