@@ -1,6 +1,6 @@
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
-import { FirebaseContext } from ".";
+import { useDocument } from "./useDocument";
 
 interface Props {
   questionId: string;
@@ -11,27 +11,6 @@ interface State {
   question: IQuestion | null;
   error: string | null;
   isLoading: boolean;
-}
-
-export function useDocument(
-  query: string,
-  callback: (value: firebase.firestore.DocumentSnapshot) => void
-) {
-  const { firestore } = useContext(FirebaseContext);
-  const queryPath = useRef(query);
-  if (queryPath.current !== query) {
-    queryPath.current = query;
-  }
-  useEffect(
-    () => {
-      const unsubscribe = firestore.doc(query).onSnapshot(callback);
-
-      return () => {
-        unsubscribe();
-      };
-    },
-    [queryPath]
-  );
 }
 
 export function QuestionContainer(props: Props) {
