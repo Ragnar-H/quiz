@@ -6,8 +6,8 @@ import { PlayerProfile } from "./PlayerProfile";
 import { CurrentQuestionContainer } from "./CurrentQuestionContainer";
 import { GameCreatorContainer } from "./GameCreatorContainer";
 import { QuestionCreatorContainer } from "./QuestionCreatorContainer";
-import { QuestionsContainer } from "./QuestionsContainer";
 import { CurrentAnsweringUser } from "./CurrentAnsweringUser";
+import { GameboardContainer } from "./GameboardContainer";
 
 export type Roles = "host" | "player";
 
@@ -110,7 +110,7 @@ class App extends Component<Props, State> {
                 />
               )}
 
-              {isHost && <QuestionsContainer gameId={gameId} />}
+              {isHost && <GameboardContainer gameId={gameId} />}
 
               <PlayersContainer gameId={gameId} />
 
