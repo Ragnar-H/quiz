@@ -54,7 +54,7 @@ function createInitialQuestions(
       questions.push({
         text: INITIAL_QUESTION_TEXT,
         answer: INITIAL_ANSWER_TEXT,
-        category: category,
+        category: category.id,
         points: QUESTION_POINT_ARRAY[i],
         id: `${category.id}-question-${i}`
       });

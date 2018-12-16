@@ -6,6 +6,6 @@ interface IQuestion {
   id: string;
   answer: string;
   text: string;
-  category: ICategory;
+  category: string;
   points: number;
 }

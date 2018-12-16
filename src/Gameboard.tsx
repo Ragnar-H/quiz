@@ -21,7 +21,7 @@ export function Gameboard(props: Props) {
             {category.name}
           </Cell>
           {questions
-            .filter(question => question.category.id === category.id)
+            .filter(question => question.category === category.id)
             .sort((a, b) => a.points - b.points)
             .map((question, questionIndex) => (
               <Cell

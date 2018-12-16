@@ -24,7 +24,7 @@ export class QuestionCreator extends Component<Props, State> {
     const { category, onSubmitQuestion } = this.props;
     e.preventDefault();
     const id = shortid.generate();
-    onSubmitQuestion({ ...this.state, category, id });
+    onSubmitQuestion({ ...this.state, category: category.id, id });
     this.setState({
       text: "",
       answer: "",
