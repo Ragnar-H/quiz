@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import posed from "react-pose";
 import styles from "./Question.module.css";
 
 interface Props {
@@ -10,6 +11,23 @@ interface Props {
   mode: "editing" | "answering" | "answered" | "unanswered";
 }
 
+const Box = posed.div({
+  front: {
+    rotateY: "0deg",
+    transition: {
+      ease: "easeOut",
+      duration: 300
+    }
+  },
+  back: {
+    rotateY: "180deg",
+    transition: {
+      ease: "easeOut",
+      duration: 300
+    }
+  }
+});
+
 export function Question(props: Props) {
   const {
     answer,
@@ -19,7 +37,10 @@ export function Question(props: Props) {
     questionId,
     questionText
   } = props;
+
+  const [isFlipped, setFlipped] = useState(false);
   const handleQuestionClick = () => {
+    setFlipped(!isFlipped);
     onQuestionClick(questionId);
   };
 
@@ -43,8 +64,12 @@ export function Question(props: Props) {
   };
 
   return (
-    <div onClick={handleQuestionClick} className={styles.question}>
+    <Box
+      onClick={handleQuestionClick}
+      className={styles.question}
+      pose={isFlipped ? "back" : "front"}
+    >
       {getContent()}
-    </div>
+    </Box>
   );
 }

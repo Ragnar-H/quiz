@@ -7,7 +7,3 @@
   border-radius: var(--small-border-radius);
   will-change: transform;
 }
-
-.question:hover {
-  transform: scale(1.01);
-}
