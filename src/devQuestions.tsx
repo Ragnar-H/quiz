@@ -1,58 +1,11 @@
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
 
-export const CATEGORIES = [
-  { name: "Leo", id: "category-0" },
-  { name: "Technology", id: "category-1" },
-  { name: "Famous people", id: "category-2" },
-  { name: "Innovation", id: "category-3" },
-  { name: "Random", id: "category-4" },
-  { name: "Spinoffs", id: "category-5" }
-];
+const INITIAL_QUESTION_TEXT = "Fill in this question";
+const INITIAL_ANSWER_TEXT = "Fill in the answer";
+const QUESTION_POINT_ARRAY = [200, 400, 600, 800, 1000];
 
-export const Questions: Array<IQuestion> = [
-  {
-    text: "Potato",
-    answer: "What is amazing food?",
-    category: CATEGORIES[0],
-    points: 500,
-    id: "123"
-  },
-  {
-    text: "Lion",
-    answer: "What is the Leo Pharma logo?",
-    category: CATEGORIES[0],
-    points: 300,
-    id: "124"
-  },
-  {
-    text: "Apple and NewSec",
-    answer: "Who are our neighbours?",
-    category: CATEGORIES[1],
-    points: 300,
-    id: "125"
-  },
-  {
-    text: "Illum",
-    answer: "Who lives above us?",
-    category: CATEGORIES[1],
-    points: 700,
-    id: "126"
-  },
-  {
-    text: "Matt Avis",
-    answer: "Who is the reigning Ping Pong champion?",
-    category: CATEGORIES[4],
-    points: 300,
-    id: "127"
-  },
-  {
-    text: "Silkegade 8",
-    answer: "What is the address of our office?",
-    category: CATEGORIES[3],
-    points: 300,
-    id: "128"
-  }
-];
+export const Categories = createInitialCategories(6);
+export const Questions = createInitialQuestions(Categories, 5);
 
 export async function loadStaticQuestionsToFirestore(
   firestore: any,
@@ -67,4 +20,31 @@ export async function loadStaticQuestionsToFirestore(
     writeBatch.set(docRef, question);
   });
   await writeBatch.commit();
+}
+
+function createInitialCategories(nrOfCategories: number): Array<ICategory> {
+  let categories = [];
+  for (let i = 0; i < nrOfCategories; i++) {
+    categories.push({ name: `Category ${i + 1}`, id: `category-${i}` });
+  }
+  return categories;
+}
+
+function createInitialQuestions(
+  categories: Array<ICategory>,
+  nrOfQuestions: number
+): Array<IQuestion> {
+  let questions: Array<IQuestion> = [];
+  categories.forEach(category => {
+    for (let i = 0; i < nrOfQuestions; i++) {
+      questions.push({
+        text: INITIAL_QUESTION_TEXT,
+        answer: INITIAL_ANSWER_TEXT,
+        category: category,
+        points: QUESTION_POINT_ARRAY[i],
+        id: `${category.name}-question-${i}`
+      });
+    }
+  });
+  return questions;
 }
