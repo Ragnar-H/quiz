@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useState } from "react";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
 import { Question } from "./Question";
+import { useCollection } from "./useCollection";
 import { FirebaseContext } from ".";
 
 interface Props {
@@ -16,6 +17,7 @@ interface State {
 export function QuestionsContainer(props: Props) {
   const { gameId } = props;
   const { firestore } = useContext(FirebaseContext);
+  const query = `${GAME_PATH}${gameId}/${QUESTION_PATH}`;
 
   const [questionState, setQuestions] = useState<State>({
     questions: [],
@@ -23,31 +25,20 @@ export function QuestionsContainer(props: Props) {
     isLoading: true
   });
 
-  const listenerRef = useRef<boolean>(false);
+  const mapSnapshotToQuestions = (
+    snapshot: firebase.firestore.QuerySnapshot
+  ) => {
+    setQuestions({
+      isLoading: false,
+      error: null,
+      questions: snapshot.docs.map((doc: any) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+    });
+  };
 
-  useEffect(
-    () => {
-      const unsubscribe = firestore
-        .collection(`${GAME_PATH}${gameId}/${QUESTION_PATH}`)
-        .onSnapshot(snapshot => {
-          setQuestions({
-            questions: snapshot.docs.map((doc: any) => ({
-              id: doc.id,
-              ...doc.data()
-            })),
-            isLoading: false,
-            error: null
-          });
-        });
-
-      listenerRef.current = true;
-
-      return () => {
-        unsubscribe();
-      };
-    },
-    [listenerRef.current]
-  );
+  useCollection(query, mapSnapshotToQuestions);
 
   const handleSetCurrentQuestion = (questionId: string) => {
     firestore
