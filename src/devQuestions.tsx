@@ -56,7 +56,7 @@ function createInitialQuestions(
         answer: INITIAL_ANSWER_TEXT,
         category: category,
         points: QUESTION_POINT_ARRAY[i],
-        id: `${category.name}-question-${i}`
+        id: `${category.id}-question-${i}`
       });
     }
   });
