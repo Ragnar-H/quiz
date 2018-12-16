@@ -1,4 +1,3 @@
-/* @flow */
 import React, { Component } from "react";
 import { FirestoreCollection } from "react-firestore";
 import { Player } from "./Player";

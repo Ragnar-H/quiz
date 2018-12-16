@@ -1,4 +1,3 @@
-/* @flow */
 import React, { useContext } from "react";
 import firebase from "firebase/app";
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";

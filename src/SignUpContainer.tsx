@@ -1,4 +1,3 @@
-/* @flow */
 import React, { useContext } from "react";
 import { SignUp } from "./SignUp";
 import { GAME_PATH, PLAYER_PATH } from "./firebasePaths";

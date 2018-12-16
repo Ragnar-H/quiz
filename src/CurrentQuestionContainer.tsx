@@ -1,4 +1,3 @@
-/* @flow */
 import React, { Component } from "react";
 import { FirestoreDocument } from "react-firestore";
 import { QuestionContainer } from "./QuestionContainer";

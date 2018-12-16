@@ -1,4 +1,3 @@
-/* @flow */
 import { GAME_PATH, QUESTION_PATH } from "./firebasePaths";
 
 export const CATEGORIES = [

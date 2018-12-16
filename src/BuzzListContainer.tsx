@@ -1,4 +1,3 @@
-/* @flow */
 import React, { Component } from "react";
 import { FirestoreCollection } from "react-firestore";
 import { QUESTION_PATH, GAME_PATH } from "./firebasePaths";
