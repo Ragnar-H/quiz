@@ -7,6 +7,9 @@ export function useCollection(
 ) {
   const { firestore } = useContext(FirebaseContext);
   const queryPath = useRef(query);
+  if (queryPath.current !== query) {
+    queryPath.current = query;
+  }
   useEffect(
     () => {
       const unsubscribe = firestore.collection(query).onSnapshot(callback);
