@@ -30,6 +30,7 @@ export function Question(props: Props) {
           <React.Fragment>
             <p>{questionText}</p>
             <p>{answer}</p>
+            <p>{points}</p>
           </React.Fragment>
         );
       case "answered":
