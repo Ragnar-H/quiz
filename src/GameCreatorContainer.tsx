@@ -3,7 +3,7 @@ import shortid from "shortid";
 import { GameCreator } from "./GameCreator";
 import { GAME_PATH } from "./firebasePaths";
 import {
-  loadStaticQuestionsToFirestore,
+  loadInitialQuestionsToFirestore,
   loadInitialCategoriesToFirestore
 } from "./devQuestions";
 import { FirebaseContext } from ".";
@@ -29,7 +29,7 @@ export function GameCreatorContainer(props: Props) {
 
     await Promise.all([
       loadInitialCategoriesToFirestore(firestore, gameId),
-      loadStaticQuestionsToFirestore(firestore, gameId)
+      loadInitialQuestionsToFirestore(firestore, gameId)
     ]);
   };
 
