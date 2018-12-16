@@ -17,7 +17,7 @@ export function Gameboard(props: Props) {
     <div className={styles.gameboard}>
       {categories.map((category, categoryIndex) => (
         <React.Fragment key={category.id}>
-          <Cell row={1} column={categoryIndex}>
+          <Cell row={1} column={categoryIndex + 1}>
             {category.name}
           </Cell>
           {questions
@@ -27,7 +27,7 @@ export function Gameboard(props: Props) {
               <Cell
                 key={question.id}
                 row={questionIndex + 2}
-                column={categoryIndex}
+                column={categoryIndex + 1}
               >
                 <Question
                   questionId={question.id}
