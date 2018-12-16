@@ -63,7 +63,7 @@ export async function loadStaticQuestionsToFirestore(
   Questions.forEach(question => {
     const docRef = firestore
       .collection(`${GAME_PATH}${gameId}/${QUESTION_PATH}`)
-      .doc();
+      .doc(question.id);
     writeBatch.set(docRef, question);
   });
   await writeBatch.commit();
