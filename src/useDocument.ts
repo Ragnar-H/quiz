@@ -18,6 +18,6 @@ export function useDocument(
         unsubscribe();
       };
     },
-    [queryPath]
+    [queryPath.current]
   );
 }
