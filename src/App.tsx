@@ -5,7 +5,6 @@ import { SignUpContainer } from "./SignUpContainer";
 import { PlayerProfile } from "./PlayerProfile";
 import { CurrentQuestionContainer } from "./CurrentQuestionContainer";
 import { GameCreatorContainer } from "./GameCreatorContainer";
-import { QuestionCreatorContainer } from "./QuestionCreatorContainer";
 import { CurrentAnsweringUser } from "./CurrentAnsweringUser";
 import { GameboardContainer } from "./GameboardContainer";
 
@@ -102,13 +101,6 @@ class App extends Component<Props, State> {
           {gameId && (
             <UserContext.Provider value={this.state}>
               <h1>GameId : {gameId}</h1>
-
-              {isHost && (
-                <QuestionCreatorContainer
-                  gameId={gameId}
-                  category={{ name: "Leo internals", id: "some-id" }}
-                />
-              )}
 
               {isHost && <GameboardContainer gameId={gameId} />}
 
