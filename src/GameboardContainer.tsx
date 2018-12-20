@@ -73,6 +73,17 @@ export function GameboardContainer(props: Props) {
       });
   };
 
+  const handleSubmitQuestionEdit = (questionEdit: IQuestionEdit) => {
+    const path = `${GAME_PATH}${gameId}/${QUESTION_PATH}`;
+    firestore
+      .collection(path)
+      .doc(questionEdit.id)
+      .set({
+        text: questionEdit.text,
+        answer: questionEdit.answer
+      });
+  };
+
   useCollection(categoryPath, mapSnapshotToCategories);
 
   return (
@@ -85,9 +96,7 @@ export function GameboardContainer(props: Props) {
           <Gameboard
             editMode={true}
             onSetCurrentQuestion={handleSetCurrentQuestion}
-            onSubmitQuestionEdit={(questionEdit: IQuestionEdit) => {
-              console.log("submitting question edits", questionEdit);
-            }}
+            onSubmitQuestionEdit={handleSubmitQuestionEdit}
             gameId={gameId}
             questions={questionsState.questions}
             categories={categoryState.categories}
