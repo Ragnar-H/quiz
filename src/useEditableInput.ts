@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { equals } from "ramda";
 
 interface EditableInput<T> {
   isDirty: boolean;
@@ -7,12 +8,12 @@ interface EditableInput<T> {
 }
 
 export function useEditableInput<T>(initialValue: T): EditableInput<T> {
-  const [isDirty, setDirty] = useState(false);
   const [value, setInnerValue] = useState(initialValue);
   const setValue = (val: T) => {
-    setDirty(true);
     setInnerValue(val);
   };
+
+  const isDirty = !equals(value, initialValue);
   return {
     isDirty,
     value,
