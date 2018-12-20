@@ -8,6 +8,7 @@ interface Props {
   answer: string;
   points: number;
   onQuestionClick: (questionId: string) => void;
+  onQuestionEdit: (questionEdit: IQuestionEdit) => void;
   mode: "editing" | "answering" | "answered" | "unanswered";
 }
 
@@ -33,25 +34,55 @@ export function Question(props: Props) {
     answer,
     mode,
     onQuestionClick,
+    onQuestionEdit,
     points,
     questionId,
     questionText
   } = props;
 
+  const [isDirty, setDirty] = useState(false);
+  const [editText, setEditText] = useState(questionText);
+  const [editAnswer, setEditAnswer] = useState(answer);
+
   const [isFlipped, setFlipped] = useState(false);
   const handleQuestionClick = () => {
+    if (mode === "editing") {
+      return;
+    }
     setFlipped(!isFlipped);
     onQuestionClick(questionId);
   };
+
+  const handleOnEditSubmit = () =>
+    onQuestionEdit({
+      id: questionId,
+      text: editText,
+      answer: editAnswer
+    });
 
   const getContent = () => {
     switch (mode) {
       case "editing":
         return (
           <React.Fragment>
-            <p>{questionText}</p>
-            <p>{answer}</p>
+            <textarea
+              value={editText}
+              onChange={event => {
+                setDirty(true);
+                setEditText(event.currentTarget.value);
+              }}
+            />
+            <textarea
+              value={editAnswer}
+              onChange={event => {
+                setDirty(true);
+                setEditAnswer(event.currentTarget.value);
+              }}
+            />
             <p>{points}</p>
+            {isDirty && (
+              <button onClick={handleOnEditSubmit}>Save changes</button>
+            )}
           </React.Fragment>
         );
       case "answered":

@@ -10,7 +10,8 @@ storiesOf("Components/Gameboard", module)
       gameId="some-game-id"
       categories={Categories}
       questions={Questions}
-      handleSetCurrentQuestion={action("handleSetCurrentQuestion")}
+      onSetCurrentQuestion={action("onSetCurrentQuestion")}
+      onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
       editMode={false}
     />
   ))
@@ -19,7 +20,8 @@ storiesOf("Components/Gameboard", module)
       gameId="some-game-id"
       categories={Categories}
       questions={Questions}
-      handleSetCurrentQuestion={action("handleSetCurrentQuestion")}
+      onSetCurrentQuestion={action("onSetCurrentQuestion")}
+      onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
       editMode={true}
     />
   ));

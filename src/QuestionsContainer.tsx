@@ -48,6 +48,9 @@ export function QuestionsContainer(props: Props) {
         currentQuestionId: questionId
       });
   };
+  const handleOnQuestionEdit = (questionEdit: IQuestionEdit) => {
+    console.log("submit this to firestore");
+  };
 
   return (
     <div>
@@ -63,6 +66,7 @@ export function QuestionsContainer(props: Props) {
             answer={question.answer}
             points={question.points}
             onQuestionClick={handleSetCurrentQuestion}
+            onQuestionEdit={handleOnQuestionEdit}
           />
         ))
       )}

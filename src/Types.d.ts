@@ -9,3 +9,9 @@ interface IQuestion {
   category: string;
   points: number;
 }
+
+interface IQuestionEdit {
+  id: string;
+  answer: string;
+  text: string;
+}

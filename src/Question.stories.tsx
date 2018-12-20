@@ -19,6 +19,7 @@ storiesOf("Components/Question", module)
         questionText="Who is the president of Romania?"
         answer="James Bond"
         onQuestionClick={action("onQuestionClick")}
+        onQuestionEdit={action("onQuestionEdit")}
         points={500}
       />
     </QuestionContainer>
@@ -31,6 +32,7 @@ storiesOf("Components/Question", module)
         questionText="Who is the president of Romania?"
         answer="James Bond"
         onQuestionClick={action("onQuestionClick")}
+        onQuestionEdit={action("onQuestionEdit")}
         points={500}
       />
     </QuestionContainer>
@@ -43,6 +45,7 @@ storiesOf("Components/Question", module)
         questionText="Who is the president of Romania?"
         answer="James Bond"
         onQuestionClick={action("onQuestionClick")}
+        onQuestionEdit={action("onQuestionEdit")}
         points={500}
       />
     </QuestionContainer>
@@ -55,6 +58,7 @@ storiesOf("Components/Question", module)
         questionText="Who is the president of Romania?"
         answer="James Bond"
         onQuestionClick={action("onQuestionClick")}
+        onQuestionEdit={action("onQuestionEdit")}
         points={500}
       />
     </QuestionContainer>

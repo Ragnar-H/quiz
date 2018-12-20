@@ -73,8 +73,11 @@ export function GameboardContainer(props: Props) {
         questionsState.questions && (
           <Gameboard
             editMode={true}
-            handleSetCurrentQuestion={questionId => {
+            onSetCurrentQuestion={questionId => {
               console.log("setting current question", questionId);
+            }}
+            onSubmitQuestionEdit={(questionEdit: IQuestionEdit) => {
+              console.log("submitting question edits", questionEdit);
             }}
             gameId={gameId}
             questions={questionsState.questions}
