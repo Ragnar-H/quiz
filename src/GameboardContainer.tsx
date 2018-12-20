@@ -78,7 +78,7 @@ export function GameboardContainer(props: Props) {
     firestore
       .collection(path)
       .doc(questionEdit.id)
-      .set({
+      .update({
         text: questionEdit.text,
         answer: questionEdit.answer
       });
