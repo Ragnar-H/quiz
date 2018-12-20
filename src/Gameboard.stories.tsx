@@ -12,6 +12,7 @@ storiesOf("Components/Gameboard", module)
       questions={Questions}
       onSetCurrentQuestion={action("onSetCurrentQuestion")}
       onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
+      onSubmitCategoryEdit={action("onSubmitCategoryEdit")}
       editMode={false}
     />
   ))
@@ -22,6 +23,7 @@ storiesOf("Components/Gameboard", module)
       questions={Questions}
       onSetCurrentQuestion={action("onSetCurrentQuestion")}
       onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
+      onSubmitCategoryEdit={action("onSubmitCategoryEdit")}
       editMode={true}
     />
   ));

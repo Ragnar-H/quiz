@@ -84,6 +84,16 @@ export function GameboardContainer(props: Props) {
       });
   };
 
+  const handleSubmitCategoryEdit = (categoryEdit: ICategory) => {
+    const path = `${GAME_PATH}${gameId}/${CATEGORY_PATH}`;
+    firestore
+      .collection(path)
+      .doc(categoryEdit.id)
+      .update({
+        name: categoryEdit.name
+      });
+  };
+
   useCollection(categoryPath, mapSnapshotToCategories);
 
   return (
@@ -97,6 +107,7 @@ export function GameboardContainer(props: Props) {
             editMode={true}
             onSetCurrentQuestion={handleSetCurrentQuestion}
             onSubmitQuestionEdit={handleSubmitQuestionEdit}
+            onSubmitCategoryEdit={handleSubmitCategoryEdit}
             gameId={gameId}
             questions={questionsState.questions}
             categories={categoryState.categories}

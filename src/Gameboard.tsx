@@ -2,6 +2,7 @@ import React from "react";
 import { Cell } from "./Cell";
 import styles from "./Gameboard.module.css";
 import { Question } from "./Question";
+import { Category } from "./Category";
 
 interface Props {
   categories: Array<ICategory>;
@@ -9,24 +10,32 @@ interface Props {
   gameId: string;
   onSetCurrentQuestion: (questionId: string) => void;
   onSubmitQuestionEdit: (questionEdit: IQuestionEdit) => void;
+  onSubmitCategoryEdit: (categoryEdit: ICategory) => void;
   editMode: boolean;
 }
 
 export function Gameboard(props: Props) {
   const {
     categories,
-    questions,
+    editMode,
     onSetCurrentQuestion,
+    onSubmitCategoryEdit,
     onSubmitQuestionEdit,
-    editMode
+    questions
   } = props;
   return (
     <div className={styles.gameboard}>
       {categories.map((category, categoryIndex) => (
         <React.Fragment key={category.id}>
           <Cell row={1} column={categoryIndex + 1}>
-            {category.name}
+            <Category
+              categoryId={category.id}
+              categoryName={category.name}
+              mode={editMode ? "editing" : "answering"}
+              onCategoryEdit={onSubmitCategoryEdit}
+            />
           </Cell>
+
           {questions
             .filter(question => question.category === category.id)
             .sort((a, b) => a.points - b.points)
