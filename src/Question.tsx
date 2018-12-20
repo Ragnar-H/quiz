@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import posed from "react-pose";
 import styles from "./Question.module.css";
+import { useEditableInput } from "./useEditableInput";
 
 interface Props {
   questionId: string;
@@ -40,9 +41,15 @@ export function Question(props: Props) {
     questionText
   } = props;
 
-  const [isDirty, setDirty] = useState(false);
-  const [editText, setEditText] = useState(questionText);
-  const [editAnswer, setEditAnswer] = useState(answer);
+  const initialQuestion = {
+    id: questionId,
+    text: questionText,
+    answer: answer
+  };
+
+  const { isDirty, value, setValue } = useEditableInput<IQuestionEdit>(
+    initialQuestion
+  );
 
   const [isFlipped, setFlipped] = useState(false);
   const handleQuestionClick = () => {
@@ -53,12 +60,7 @@ export function Question(props: Props) {
     onQuestionClick(questionId);
   };
 
-  const handleOnEditSubmit = () =>
-    onQuestionEdit({
-      id: questionId,
-      text: editText,
-      answer: editAnswer
-    });
+  const handleOnEditSubmit = () => onQuestionEdit(value);
 
   const getContent = () => {
     switch (mode) {
@@ -66,18 +68,16 @@ export function Question(props: Props) {
         return (
           <React.Fragment>
             <textarea
-              value={editText}
-              onChange={event => {
-                setDirty(true);
-                setEditText(event.currentTarget.value);
-              }}
+              value={value.text}
+              onChange={event =>
+                setValue({ ...value, text: event.currentTarget.value })
+              }
             />
             <textarea
-              value={editAnswer}
-              onChange={event => {
-                setDirty(true);
-                setEditAnswer(event.currentTarget.value);
-              }}
+              value={value.answer}
+              onChange={event =>
+                setValue({ ...value, answer: event.currentTarget.value })
+              }
             />
             <p>{points}</p>
             {isDirty && (
