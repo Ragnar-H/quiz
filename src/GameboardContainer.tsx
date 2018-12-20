@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { GAME_PATH, CATEGORY_PATH, QUESTION_PATH } from "./firebasePaths";
 import { Gameboard } from "./Gameboard";
 import { useCollection } from "./useCollection";
+import { FirebaseContext } from ".";
 
 interface Props {
   gameId: string;
@@ -20,6 +21,7 @@ interface CategoryState {
 }
 export function GameboardContainer(props: Props) {
   const { gameId } = props;
+  const { firestore } = useContext(FirebaseContext);
   const categoryPath = `${GAME_PATH}${gameId}/${CATEGORY_PATH}`;
   const questionPath = `${GAME_PATH}${gameId}/${QUESTION_PATH}`;
 
@@ -62,6 +64,15 @@ export function GameboardContainer(props: Props) {
     });
   };
 
+  const handleSetCurrentQuestion = (questionId: string) => {
+    firestore
+      .collection(GAME_PATH)
+      .doc(gameId)
+      .set({
+        currentQuestionId: questionId
+      });
+  };
+
   useCollection(categoryPath, mapSnapshotToCategories);
 
   return (
@@ -73,9 +84,7 @@ export function GameboardContainer(props: Props) {
         questionsState.questions && (
           <Gameboard
             editMode={true}
-            onSetCurrentQuestion={questionId => {
-              console.log("setting current question", questionId);
-            }}
+            onSetCurrentQuestion={handleSetCurrentQuestion}
             onSubmitQuestionEdit={(questionEdit: IQuestionEdit) => {
               console.log("submitting question edits", questionEdit);
             }}
