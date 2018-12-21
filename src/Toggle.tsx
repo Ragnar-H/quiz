@@ -4,10 +4,15 @@ import posed, { PoseGroup } from "react-pose";
 import throttle from "lodash.throttle";
 import styles from "./Toggle.module.css";
 
+export interface ToggleLabel {
+  label: string;
+  value: boolean;
+}
+
 interface Props {
-  labels: Array<string>;
-  initialLabel: string;
-  onChange: (label: string) => void;
+  labels: Array<ToggleLabel>;
+  initialLabel: ToggleLabel;
+  onChange: (label: ToggleLabel) => void;
 }
 
 const ToggleBox = posed.button({
@@ -20,12 +25,12 @@ const ToggleBox = posed.button({
 });
 
 const handleOnChange = (
-  newValue: string,
-  setValue: (value: string) => void,
-  onChange: (value: string) => void
+  newLabel: ToggleLabel,
+  setLabel: (label: ToggleLabel) => void,
+  onChange: (label: ToggleLabel) => void
 ) => {
-  setValue(newValue);
-  onChange(newValue);
+  setLabel(newLabel);
+  onChange(newLabel);
 };
 
 const throttledHandleOnChange = throttle(handleOnChange, 500, {
@@ -35,35 +40,35 @@ const throttledHandleOnChange = throttle(handleOnChange, 500, {
 
 export function Toggle(props: Props) {
   const { initialLabel, onChange, labels } = props;
-  const [value, setValue] = useState(initialLabel);
+  const [label, setLabel] = useState(initialLabel);
 
   return (
-    <div className={styles.question}>
+    <div className={styles.toggle}>
       <PoseGroup>
-        {value === initialLabel && (
+        {label.value === labels[0].value && (
           <ToggleBox
             key="front"
             onClick={() =>
-              throttledHandleOnChange(labels[1], setValue, onChange)
+              throttledHandleOnChange(labels[1], setLabel, onChange)
             }
             style={{
               backgroundColor: "var(--base6)"
             }}
           >
-            {value}
+            {label.label}
           </ToggleBox>
         )}
-        {value !== initialLabel && (
+        {label.value === labels[1].value && (
           <ToggleBox
             key="back"
             onClick={() =>
-              throttledHandleOnChange(labels[0], setValue, onChange)
+              throttledHandleOnChange(labels[0], setLabel, onChange)
             }
             style={{
               backgroundColor: "var(--base5)"
             }}
           >
-            {value}
+            {label.label}
           </ToggleBox>
         )}
       </PoseGroup>
