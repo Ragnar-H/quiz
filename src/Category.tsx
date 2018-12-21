@@ -28,7 +28,8 @@ export function Category(props: Props) {
       case "editing":
         return (
           <React.Fragment>
-            <textarea
+            <input
+              type="text"
               value={value.name}
               onChange={event =>
                 setValue({ ...value, name: event.currentTarget.value })

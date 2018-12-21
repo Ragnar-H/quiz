@@ -61,7 +61,6 @@ textarea {
   height: calc(var(--small-spacing) * 8);
   border-radius: var(--small-border-radius);
   border: none;
-  padding: 0 calc(var(--small-spacing) * 3);
   min-width: calc(var(--small-spacing) * 20);
   margin: 0 var(--small-spacing);
   text-align: center;

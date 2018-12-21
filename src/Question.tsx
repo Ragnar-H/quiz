@@ -67,13 +67,15 @@ export function Question(props: Props) {
       case "editing":
         return (
           <React.Fragment>
-            <textarea
+            <input
+              type="text"
               value={value.text}
               onChange={event =>
                 setValue({ ...value, text: event.currentTarget.value })
               }
             />
-            <textarea
+            <input
+              type="text"
               value={value.answer}
               onChange={event =>
                 setValue({ ...value, answer: event.currentTarget.value })
