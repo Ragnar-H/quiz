@@ -15,14 +15,14 @@ interface Props {
 
 const Box = posed.div({
   front: {
-    rotateY: "0deg",
+    rotateX: "0deg",
     transition: {
       ease: "easeOut",
       duration: 300
     }
   },
   back: {
-    rotateY: "180deg",
+    rotateX: "180deg",
     transition: {
       ease: "easeOut",
       duration: 300
