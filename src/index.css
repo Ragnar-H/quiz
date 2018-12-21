@@ -52,7 +52,6 @@ select {
   border: none;
   padding: 0 calc(var(--small-spacing) * 3);
   min-width: calc(var(--small-spacing) * 20);
-  margin: 0 var(--small-spacing);
   background: #fff;
   text-align: center;
 }

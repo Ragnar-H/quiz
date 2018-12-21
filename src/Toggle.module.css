@@ -1,0 +1,9 @@
+.toggle {
+  flex: 1;
+  margin: var(--medium-spacing);
+  background-color: var(--base3);
+  cursor: pointer;
+  text-align: center;
+  border-radius: var(--small-border-radius);
+  will-change: transform;
+}
