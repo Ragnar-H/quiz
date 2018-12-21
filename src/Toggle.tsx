@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import posed, { PoseGroup } from "react-pose";
+import throttle from "lodash.throttle";
 import styles from "./Toggle.module.css";
 
 interface Props {
@@ -18,14 +19,23 @@ const ToggleBox = posed.button({
   }
 });
 
+const handleOnChange = (
+  newValue: string,
+  setValue: (value: string) => void,
+  onChange: (value: string) => void
+) => {
+  setValue(newValue);
+  onChange(newValue);
+};
+
+const throttledHandleOnChange = throttle(handleOnChange, 500, {
+  leading: true,
+  trailing: false
+});
+
 export function Toggle(props: Props) {
   const { initialLabel, onChange, labels } = props;
   const [value, setValue] = useState(initialLabel);
-
-  const handleOnChange = (newValue: string) => {
-    setValue(newValue);
-    onChange(newValue);
-  };
 
   return (
     <div className={styles.question}>
@@ -33,7 +43,9 @@ export function Toggle(props: Props) {
         {value === initialLabel && (
           <ToggleBox
             key="front"
-            onClick={() => handleOnChange(labels[1])}
+            onClick={() =>
+              throttledHandleOnChange(labels[1], setValue, onChange)
+            }
             style={{
               backgroundColor: "var(--base6)"
             }}
@@ -44,7 +56,9 @@ export function Toggle(props: Props) {
         {value !== initialLabel && (
           <ToggleBox
             key="back"
-            onClick={() => handleOnChange(labels[0])}
+            onClick={() =>
+              throttledHandleOnChange(labels[0], setValue, onChange)
+            }
             style={{
               backgroundColor: "var(--base5)"
             }}
