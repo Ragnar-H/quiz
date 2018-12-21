@@ -67,6 +67,7 @@ export function Question(props: Props) {
       case "editing":
         return (
           <React.Fragment>
+            <p>{points}</p>
             <input
               type="text"
               value={value.text}
@@ -81,7 +82,6 @@ export function Question(props: Props) {
                 setValue({ ...value, answer: event.currentTarget.value })
               }
             />
-            <p>{points}</p>
             {isDirty && (
               <button onClick={handleOnEditSubmit}>Save changes</button>
             )}
