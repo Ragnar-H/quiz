@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import posed from "react-pose";
+import throttle from "lodash.throttle";
 import styles from "./Question.module.css";
 import { useEditableInput } from "./useEditableInput";
 import { timeline } from "popmotion";
 
+const FLIP_DURATION = 1000;
 interface Props {
   questionId: string;
   questionText: string;
@@ -13,6 +15,25 @@ interface Props {
   onQuestionEdit: (questionEdit: IQuestionEdit) => void;
   mode: "editing" | "answering" | "answered" | "unanswered";
 }
+
+const handleQuestionClick = (
+  isFlipped: boolean,
+  questionId: string,
+  setFlipped: (isFlipped: boolean) => void,
+  onQuestionClick: (questionId: string) => void
+) => {
+  setFlipped(!isFlipped);
+  onQuestionClick(questionId);
+};
+
+const throttledHandleQuestionClick = throttle(
+  handleQuestionClick,
+  FLIP_DURATION,
+  {
+    leading: true,
+    trailing: false
+  }
+);
 
 const flipSteps: any = {
   scale: [1, 1.1, 1.1, 1],
@@ -28,11 +49,11 @@ const FlipCard = posed.div({
       return timeline([
         0,
         { track, from, to: steps[3] },
-        200,
+        FLIP_DURATION / 5,
         { track, from, to: steps[2] },
-        500,
+        FLIP_DURATION / 2,
         { track, to: steps[1] },
-        1000,
+        FLIP_DURATION,
         { track, to: steps[0] }
       ]).pipe((v: any) => v[track]);
     }
@@ -45,11 +66,11 @@ const FlipCard = posed.div({
       return timeline([
         0,
         { track, from, to: steps[0] },
-        200,
+        FLIP_DURATION / 5,
         { track, from, to: steps[1] },
-        500,
+        FLIP_DURATION / 2,
         { track, to: steps[2] },
-        1000,
+        FLIP_DURATION,
         { track, to: steps[3] }
       ]).pipe((v: any) => v[track]);
     }
@@ -78,13 +99,6 @@ export function Question(props: Props) {
   );
 
   const [isFlipped, setFlipped] = useState(false);
-  const handleQuestionClick = () => {
-    if (mode === "editing") {
-      return;
-    }
-    setFlipped(!isFlipped);
-    onQuestionClick(questionId);
-  };
 
   const handleOnEditSubmit = () => onQuestionEdit(value);
 
@@ -119,7 +133,16 @@ export function Question(props: Props) {
         return <p>{answer}</p>;
       case "unanswered":
         return (
-          <React.Fragment>
+          <div
+            onClick={() =>
+              throttledHandleQuestionClick(
+                isFlipped,
+                questionId,
+                setFlipped,
+                onQuestionClick
+              )
+            }
+          >
             <FlipCard
               className={styles.front}
               pose={isFlipped ? "back" : "front"}
@@ -132,14 +155,10 @@ export function Question(props: Props) {
             >
               <p>{answer}</p>
             </FlipCard>
-          </React.Fragment>
+          </div>
         );
     }
   };
 
-  return (
-    <div className={styles.question} onClick={handleQuestionClick}>
-      {getContent()}
-    </div>
-  );
+  return <div className={styles.question}>{getContent()}</div>;
 }
