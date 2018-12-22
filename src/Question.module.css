@@ -1,28 +1,30 @@
 .question {
-  display: flex;
-  position: relative;
-  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
   margin: var(--medium-spacing);
   cursor: pointer;
   text-align: center;
+  height: 100%;
   min-height: calc(var(--medium-spacing) * 8);
   width: 100%;
 }
+
 .front {
   backface-visibility: hidden;
 }
 .front,
 .back {
+  grid-row-start: 1;
+  grid-column-start: 1;
   border-radius: var(--small-border-radius);
+  margin: var(--medium-spacing) 0;
   background-color: var(--base3);
   backface-visibility: hidden;
-  position: absolute;
   display: flex;
   flex: 1;
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
-  height: 100%;
   width: 100%;
   will-change: transform;
 }

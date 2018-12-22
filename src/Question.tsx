@@ -133,29 +133,36 @@ export function Question(props: Props) {
         return <p>{answer}</p>;
       case "unanswered":
         return (
-          <div
-            onClick={() =>
-              throttledHandleQuestionClick(
-                isFlipped,
-                questionId,
-                setFlipped,
-                onQuestionClick
-              )
-            }
-          >
+          <React.Fragment>
             <FlipCard
               className={styles.front}
+              onClick={() =>
+                throttledHandleQuestionClick(
+                  isFlipped,
+                  questionId,
+                  setFlipped,
+                  onQuestionClick
+                )
+              }
               pose={isFlipped ? "back" : "front"}
             >
               <p>{points}</p>
             </FlipCard>
             <FlipCard
+              onClick={() =>
+                throttledHandleQuestionClick(
+                  isFlipped,
+                  questionId,
+                  setFlipped,
+                  onQuestionClick
+                )
+              }
               className={styles.back}
               pose={isFlipped ? "front" : "back"}
             >
               <p>{answer}</p>
             </FlipCard>
-          </div>
+          </React.Fragment>
         );
     }
   };
