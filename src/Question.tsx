@@ -77,7 +77,7 @@ export function Question(props: Props) {
     switch (mode) {
       case "editing":
         return (
-          <React.Fragment>
+          <div className={styles.front}>
             <p>{points}</p>
             <input
               type="text"
@@ -96,24 +96,35 @@ export function Question(props: Props) {
             {isDirty && (
               <button onClick={handleOnEditSubmit}>Save changes</button>
             )}
-          </React.Fragment>
+          </div>
         );
       case "answered":
         return null;
       case "answering":
         return <p>{answer}</p>;
       case "unanswered":
-        return <p>{points}</p>;
+        return (
+          <React.Fragment>
+            <FlipCard
+              className={styles.front}
+              pose={isFlipped ? "back" : "front"}
+            >
+              <p>{points}</p>
+            </FlipCard>
+            <FlipCard
+              className={styles.back}
+              pose={isFlipped ? "front" : "back"}
+            >
+              <p>{answer}</p>
+            </FlipCard>
+          </React.Fragment>
+        );
     }
   };
 
   return (
-    <FlipCard
-      onClick={handleQuestionClick}
-      className={styles.question}
-      pose={isFlipped ? "back" : "front"}
-    >
+    <div className={styles.question} onClick={handleQuestionClick}>
       {getContent()}
-    </FlipCard>
+    </div>
   );
 }
