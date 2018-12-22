@@ -1,9 +1,14 @@
 .question {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: var(--medium-spacing);
   background-color: var(--base3);
   cursor: pointer;
   text-align: center;
   border-radius: var(--small-border-radius);
   will-change: transform;
+  min-height: calc(var(--medium-spacing) * 8);
 }
