@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import posed from "react-pose";
 import styles from "./Question.module.css";
 import { useEditableInput } from "./useEditableInput";
+import { timeline } from "popmotion";
 
 interface Props {
   questionId: string;
@@ -13,19 +14,29 @@ interface Props {
   mode: "editing" | "answering" | "answered" | "unanswered";
 }
 
-const Box = posed.div({
+const flipSteps: any = {
+  scale: [1.1, 1.1, 1],
+  rotateX: [0, 180, 180]
+};
+
+const FlipCard = posed.div({
   front: {
-    rotateX: "0deg",
-    transition: {
-      ease: "easeOut",
-      duration: 300
-    }
+    scale: 1,
+    rotateX: 0
   },
   back: {
-    rotateX: "180deg",
-    transition: {
-      ease: "easeOut",
-      duration: 300
+    scale: 1,
+    rotateX: 180,
+    transition: ({ key: track, from }: { key: any; from: any }) => {
+      const steps = flipSteps[track];
+      return timeline([
+        100,
+        { track, from, to: steps[0] },
+        500,
+        { track, to: steps[1] },
+        1000,
+        { track, to: steps[2] }
+      ]).pipe((v: any) => v[track]);
     }
   }
 });
@@ -97,12 +108,12 @@ export function Question(props: Props) {
   };
 
   return (
-    <Box
+    <FlipCard
       onClick={handleQuestionClick}
       className={styles.question}
       pose={isFlipped ? "back" : "front"}
     >
       {getContent()}
-    </Box>
+    </FlipCard>
   );
 }
