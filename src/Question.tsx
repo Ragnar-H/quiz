@@ -15,14 +15,27 @@ interface Props {
 }
 
 const flipSteps: any = {
-  scale: [1.1, 1.1, 1],
-  rotateX: [0, 180, 180]
+  scale: [1, 1.1, 1.1, 1],
+  rotateX: [0, 0, 180, 180]
 };
 
 const FlipCard = posed.div({
   front: {
     scale: 1,
-    rotateX: 0
+    rotateX: 0,
+    transition: ({ key: track, from }: { key: any; from: any }) => {
+      const steps = flipSteps[track];
+      return timeline([
+        0,
+        { track, from, to: steps[3] },
+        200,
+        { track, from, to: steps[2] },
+        500,
+        { track, to: steps[1] },
+        1000,
+        { track, to: steps[0] }
+      ]).pipe((v: any) => v[track]);
+    }
   },
   back: {
     scale: 1,
@@ -30,12 +43,14 @@ const FlipCard = posed.div({
     transition: ({ key: track, from }: { key: any; from: any }) => {
       const steps = flipSteps[track];
       return timeline([
-        100,
+        0,
         { track, from, to: steps[0] },
+        200,
+        { track, from, to: steps[1] },
         500,
-        { track, to: steps[1] },
+        { track, to: steps[2] },
         1000,
-        { track, to: steps[2] }
+        { track, to: steps[3] }
       ]).pipe((v: any) => v[track]);
     }
   }
