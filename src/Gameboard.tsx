@@ -30,7 +30,7 @@ export function Gameboard(props: Props) {
   const updateToggle = (label: ToggleLabel) => setEditMode(label.value);
   const editLabels = [
     { label: "Preview mode", value: false },
-    { label: "Show edit mode", value: true }
+    { label: "Edit mode", value: true }
   ];
 
   return (
