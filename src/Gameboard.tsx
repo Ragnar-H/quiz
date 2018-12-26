@@ -19,11 +19,12 @@ interface Props {
 export function Gameboard(props: Props) {
   const {
     categories,
+    currentQuestionId,
+    editMode: initialEditMode,
     onSetCurrentQuestion,
     onSubmitCategoryEdit,
     onSubmitQuestionEdit,
-    questions,
-    editMode: initialEditMode
+    questions
   } = props;
 
   const [editMode, setEditMode] = useState(initialEditMode);
@@ -42,39 +43,45 @@ export function Gameboard(props: Props) {
         onChange={updateToggle}
       />
       <div className={styles.gameboard}>
-        {categories.map((category, categoryIndex) => (
-          <React.Fragment key={category.id}>
-            <Cell row={1} column={categoryIndex + 1}>
-              <Category
-                categoryId={category.id}
-                categoryName={category.name}
-                mode={editMode ? "editing" : "answering"}
-                onCategoryEdit={onSubmitCategoryEdit}
-              />
-            </Cell>
+        {currentQuestionId ? (
+          <Cell row={1} column={1} endRow={7} endColumn={7}>
+            <div>answering {currentQuestionId}</div>
+          </Cell>
+        ) : (
+          categories.map((category, categoryIndex) => (
+            <React.Fragment key={category.id}>
+              <Cell row={1} column={categoryIndex + 1}>
+                <Category
+                  categoryId={category.id}
+                  categoryName={category.name}
+                  mode={editMode ? "editing" : "answering"}
+                  onCategoryEdit={onSubmitCategoryEdit}
+                />
+              </Cell>
 
-            {questions
-              .filter(question => question.category === category.id)
-              .sort((a, b) => a.points - b.points)
-              .map((question, questionIndex) => (
-                <Cell
-                  key={question.id}
-                  row={questionIndex + 2}
-                  column={categoryIndex + 1}
-                >
-                  <Question
-                    questionId={question.id}
-                    questionText={question.text}
-                    answer={question.answer}
-                    onQuestionClick={onSetCurrentQuestion}
-                    onQuestionEdit={onSubmitQuestionEdit}
-                    points={question.points}
-                    mode={editMode ? "editing" : "unanswered"}
-                  />
-                </Cell>
-              ))}
-          </React.Fragment>
-        ))}
+              {questions
+                .filter(question => question.category === category.id)
+                .sort((a, b) => a.points - b.points)
+                .map((question, questionIndex) => (
+                  <Cell
+                    key={question.id}
+                    row={questionIndex + 2}
+                    column={categoryIndex + 1}
+                  >
+                    <Question
+                      questionId={question.id}
+                      questionText={question.text}
+                      answer={question.answer}
+                      onQuestionClick={onSetCurrentQuestion}
+                      onQuestionEdit={onSubmitQuestionEdit}
+                      points={question.points}
+                      mode={editMode ? "editing" : "unanswered"}
+                    />
+                  </Cell>
+                ))}
+            </React.Fragment>
+          ))
+        )}
       </div>
     </div>
   );

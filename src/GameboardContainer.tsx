@@ -3,11 +3,17 @@ import { GAME_PATH, CATEGORY_PATH, QUESTION_PATH } from "./firebasePaths";
 import { Gameboard } from "./Gameboard";
 import { useCollection } from "./useCollection";
 import { FirebaseContext } from ".";
+import { useDocument } from "./useDocument";
 
 interface Props {
   gameId: string;
 }
 
+interface CurrentQuestionState {
+  currentQuestionId: string | null;
+  error: string | null;
+  isLoading: boolean;
+}
 interface QuestionsState {
   questions: Array<IQuestion> | null;
   error: string | null;
@@ -22,8 +28,9 @@ interface CategoryState {
 export function GameboardContainer(props: Props) {
   const { gameId } = props;
   const { firestore } = useContext(FirebaseContext);
-  const categoryPath = `${GAME_PATH}${gameId}/${CATEGORY_PATH}`;
-  const questionPath = `${GAME_PATH}${gameId}/${QUESTION_PATH}`;
+  const gamePath = `${GAME_PATH}${gameId}`;
+  const categoryPath = `${gamePath}/${CATEGORY_PATH}`;
+  const questionPath = `${gamePath}/${QUESTION_PATH}`;
 
   const [categoryState, setCategories] = useState<CategoryState>({
     categories: null,
@@ -36,6 +43,25 @@ export function GameboardContainer(props: Props) {
     error: null,
     isLoading: true
   });
+
+  const [currentQuestionState, setCurrentQuestion] = useState<
+    CurrentQuestionState
+  >({
+    currentQuestionId: null,
+    error: null,
+    isLoading: true
+  });
+
+  const mapSnapshotToCurrentQuestion = (
+    snapshot: firebase.firestore.DocumentSnapshot
+  ) => {
+    const currentQuestionId = snapshot.get("currentQuestionId");
+    setCurrentQuestion({
+      currentQuestionId,
+      error: null,
+      isLoading: false
+    });
+  };
 
   const mapSnapshotToQuestions = (
     snapshot: firebase.firestore.QuerySnapshot
@@ -50,7 +76,6 @@ export function GameboardContainer(props: Props) {
     });
   };
 
-  useCollection(questionPath, mapSnapshotToQuestions);
   const mapSnapshotToCategories = (
     snapshot: firebase.firestore.QuerySnapshot
   ) => {
@@ -94,7 +119,9 @@ export function GameboardContainer(props: Props) {
       });
   };
 
+  useCollection(questionPath, mapSnapshotToQuestions);
   useCollection(categoryPath, mapSnapshotToCategories);
+  useDocument(gamePath, mapSnapshotToCurrentQuestion);
 
   return (
     <React.Fragment>
@@ -108,6 +135,7 @@ export function GameboardContainer(props: Props) {
             onSetCurrentQuestion={handleSetCurrentQuestion}
             onSubmitQuestionEdit={handleSubmitQuestionEdit}
             onSubmitCategoryEdit={handleSubmitCategoryEdit}
+            currentQuestionId={currentQuestionState.currentQuestionId}
             gameId={gameId}
             questions={questionsState.questions}
             categories={categoryState.categories}
