@@ -130,7 +130,11 @@ export function Question(props: Props) {
       case "answered":
         return null;
       case "answering":
-        return <p>{answer}</p>;
+        return (
+          <div className={styles.back} style={{ transform: "rotateX(0deg)" }}>
+            <p>{answer}</p>
+          </div>
+        );
       case "unanswered":
         return (
           <React.Fragment>
