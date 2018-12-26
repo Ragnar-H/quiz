@@ -72,7 +72,6 @@ export function Gameboard(props: Props) {
                   onCategoryEdit={onSubmitCategoryEdit}
                 />
               </Cell>
-
               {questions
                 .filter(question => question.category === category.id)
                 .sort((a, b) => a.points - b.points)
