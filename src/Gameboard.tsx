@@ -35,7 +35,7 @@ export function Gameboard(props: Props) {
   ];
 
   return (
-    <div>
+    <div className={styles.container}>
       <Toggle
         labels={editLabels}
         initialLabel={initialEditMode ? editLabels[1] : editLabels[0]}
