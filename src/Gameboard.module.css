@@ -5,6 +5,8 @@
 }
 
 .gameControls {
+  display: flex;
+  justify-content: center;
   padding-top: var(--medium-spacing);
 }
 

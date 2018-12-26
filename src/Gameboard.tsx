@@ -43,6 +43,13 @@ export function Gameboard(props: Props) {
           initialLabel={initialEditMode ? editLabels[1] : editLabels[0]}
           onChange={updateToggle}
         />
+        {currentQuestionId && (
+          <div>
+            <button onClick={() => onSetCurrentQuestion(null)}>
+              Click me to clear question
+            </button>
+          </div>
+        )}
       </div>
       <div className={styles.gameboard}>
         {currentQuestionId ? (
