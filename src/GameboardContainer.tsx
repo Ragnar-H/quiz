@@ -89,7 +89,7 @@ export function GameboardContainer(props: Props) {
     });
   };
 
-  const handleSetCurrentQuestion = (questionId: string) => {
+  const handleSetCurrentQuestion = (questionId: string | null) => {
     firestore
       .collection(GAME_PATH)
       .doc(gameId)
