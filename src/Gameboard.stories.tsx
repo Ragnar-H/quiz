@@ -10,6 +10,7 @@ storiesOf("Components/Gameboard", module)
       gameId="some-game-id"
       categories={Categories}
       questions={Questions}
+      currentQuestionId={null}
       onSetCurrentQuestion={action("onSetCurrentQuestion")}
       onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
       onSubmitCategoryEdit={action("onSubmitCategoryEdit")}
@@ -21,9 +22,22 @@ storiesOf("Components/Gameboard", module)
       gameId="some-game-id"
       categories={Categories}
       questions={Questions}
+      currentQuestionId={null}
       onSetCurrentQuestion={action("onSetCurrentQuestion")}
       onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
       onSubmitCategoryEdit={action("onSubmitCategoryEdit")}
       editMode={true}
+    />
+  ))
+  .add("answering", () => (
+    <Gameboard
+      gameId="some-game-id"
+      categories={Categories}
+      questions={Questions}
+      currentQuestionId="category-3-question-0"
+      onSetCurrentQuestion={action("onSetCurrentQuestion")}
+      onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
+      onSubmitCategoryEdit={action("onSubmitCategoryEdit")}
+      editMode={false}
     />
   ));

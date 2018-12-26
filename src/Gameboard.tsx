@@ -9,6 +9,7 @@ interface Props {
   categories: Array<ICategory>;
   questions: Array<IQuestion>;
   gameId: string;
+  currentQuestionId: string | null;
   onSetCurrentQuestion: (questionId: string) => void;
   onSubmitQuestionEdit: (questionEdit: IQuestionEdit) => void;
   onSubmitCategoryEdit: (categoryEdit: ICategory) => void;
