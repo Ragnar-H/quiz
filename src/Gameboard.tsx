@@ -37,15 +37,29 @@ export function Gameboard(props: Props) {
 
   return (
     <div className={styles.container}>
-      <Toggle
-        labels={editLabels}
-        initialLabel={initialEditMode ? editLabels[1] : editLabels[0]}
-        onChange={updateToggle}
-      />
+      <div className={styles.gameControls}>
+        <Toggle
+          labels={editLabels}
+          initialLabel={initialEditMode ? editLabels[1] : editLabels[0]}
+          onChange={updateToggle}
+        />
+      </div>
       <div className={styles.gameboard}>
         {currentQuestionId ? (
           <Cell row={1} column={1} endRow={7} endColumn={7}>
-            <div>answering {currentQuestionId}</div>
+            {questions
+              .filter(question => question.id === currentQuestionId)
+              .map(question => (
+                <Question
+                  questionId={question.id}
+                  questionText={question.text}
+                  answer={question.answer}
+                  onQuestionClick={onSetCurrentQuestion}
+                  onQuestionEdit={onSubmitQuestionEdit}
+                  points={question.points}
+                  mode="answering"
+                />
+              ))}
           </Cell>
         ) : (
           categories.map((category, categoryIndex) => (
