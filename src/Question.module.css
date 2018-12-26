@@ -1,7 +1,6 @@
 .question {
   display: grid;
   grid-template-columns: 1fr;
-  margin: var(--medium-spacing);
   cursor: pointer;
   text-align: center;
   height: 100%;
@@ -17,7 +16,6 @@
   grid-row-start: 1;
   grid-column-start: 1;
   border-radius: var(--small-border-radius);
-  margin: var(--medium-spacing) 0;
   background-color: var(--base3);
   backface-visibility: hidden;
   display: flex;
