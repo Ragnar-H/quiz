@@ -3,4 +3,14 @@
   min-height: calc(var(--small-spacing) * 10);
   justify-content: center;
   align-items: center;
+  will-change: transform;
+}
+
+.cellFullscreen {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  grid-column-end: 7;
+  grid-row-end: 7;
+  z-index: 2;
+  will-change: transform;
 }
