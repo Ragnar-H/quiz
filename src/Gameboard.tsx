@@ -34,7 +34,7 @@ export function Gameboard(props: Props) {
   useEffect(() => {
     animateCSSGrid.wrapGrid(gameboardGrid.current, {
       easing: "backOut",
-      stagger: 10,
+      stagger: 0,
       duration: 700
     });
   }, []);
