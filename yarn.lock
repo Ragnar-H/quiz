@@ -1353,7 +1353,7 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*":
+"@types/lodash@*", "@types/lodash@^4.14.119":
   version "4.14.119"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.119.tgz#be847e5f4bc3e35e46d041c394ead8b603ad8b39"
   integrity sha512-Z3TNyBL8Vd/M9D9Ms2S3LmFq2sSMzahodD6rCS9V2N44HUMINb75jNkSuwAx7eo2ufqTdfOdtGQpNbieUjPQmw==
@@ -1834,6 +1834,16 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
+
+animate-css-grid@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/animate-css-grid/-/animate-css-grid-1.1.0.tgz#a701d4f97d3dbfe3544342863d42318dd6c71368"
+  integrity sha512-ZjRbOzMvc9RXluOQvF94PouJojAiS4k4exwKHGidIuOiEEFUf6IQGII4BqpSk1NdIiFLiaNu1HkywVX1W8LUEg==
+  dependencies:
+    "@popmotion/easing" "^1.0.1"
+    "@types/lodash" "^4.14.119"
+    lodash.throttle "^4.1.1"
+    popmotion "^8.5.4"
 
 ansi-align@^2.0.0:
   version "2.0.0"
@@ -8389,7 +8399,7 @@ popmotion-pose@^3.4.0:
     style-value-types "^3.0.6"
     tslib "^1.9.1"
 
-popmotion@^8.5.0:
+popmotion@^8.5.0, popmotion@^8.5.4:
   version "8.5.4"
   resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-8.5.4.tgz#db6393f745df585290f0858207561a9bbba545b5"
   integrity sha512-cjQY4tTHhuq7dHl6w/eTKwbBOccI3RcZeF+OCuyuSbJoRe5It9Lcft5cV0MX/7ZoEpFAlu9ZbJ+fzNOBkXckxA==
