@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import * as animateCSSGrid from "animate-css-grid";
 import { Cell } from "./Cell";
 import styles from "./Gameboard.module.css";
-import { Question } from "./Question";
+import { Question, FLIP_DURATION } from "./Question";
 import { Category } from "./Category";
 import { ToggleLabel, Toggle } from "./Toggle";
 
@@ -16,6 +17,7 @@ interface Props {
   editMode: boolean;
 }
 
+const FULLSCREEN_BUFFER = 300;
 export function Gameboard(props: Props) {
   const {
     categories,
@@ -27,8 +29,31 @@ export function Gameboard(props: Props) {
     questions
   } = props;
 
+  const gameboardGrid = useRef(null);
+
+  useEffect(() => {
+    animateCSSGrid.wrapGrid(gameboardGrid.current, {
+      easing: "backOut",
+      stagger: 10,
+      duration: 700
+    });
+  }, []);
+
   const [editMode, setEditMode] = useState(initialEditMode);
 
+  const [delayedCurrentQuestion, setDelayedCurrentQuestion] = useState<
+    string | null
+  >(null);
+
+  useEffect(
+    () => {
+      setTimeout(
+        () => setDelayedCurrentQuestion(currentQuestionId),
+        FLIP_DURATION + FULLSCREEN_BUFFER
+      );
+    },
+    [currentQuestionId]
+  );
   const updateToggle = (label: ToggleLabel) => setEditMode(label.value);
   const editLabels = [
     { label: "Preview mode", value: false },
@@ -51,7 +76,7 @@ export function Gameboard(props: Props) {
           </div>
         )}
       </div>
-      <div className={styles.gameboard}>
+      <div className={styles.gameboard} ref={gameboardGrid}>
         {categories.map((category, categoryIndex) => (
           <React.Fragment key={category.id}>
             <Cell row={1} column={categoryIndex + 1}>
@@ -68,8 +93,9 @@ export function Gameboard(props: Props) {
               .map((question, questionIndex) => (
                 <Cell
                   key={question.id}
-                  row={questionIndex + 2}
                   column={categoryIndex + 1}
+                  row={questionIndex + 2}
+                  fullscreen={delayedCurrentQuestion === question.id}
                 >
                   <Question
                     questionId={question.id}

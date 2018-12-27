@@ -5,7 +5,7 @@ import styles from "./Question.module.css";
 import { useEditableInput } from "./useEditableInput";
 import { timeline } from "popmotion";
 
-const FLIP_DURATION = 1000;
+export const FLIP_DURATION = 1000;
 interface Props {
   questionId: string;
   questionText: string;
