@@ -15,6 +15,13 @@
 
 html {
   background-color: #122835;
+  box-sizing: border-box;
+}
+
+*/ *,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 body {
