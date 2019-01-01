@@ -2,6 +2,7 @@
   height: 100vh;
   display: grid;
   grid-template-rows: 1fr 9fr;
+  padding: 0 var(--medium-spacing);
 }
 
 .gameControls {
