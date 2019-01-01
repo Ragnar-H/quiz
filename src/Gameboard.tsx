@@ -107,7 +107,13 @@ export function Gameboard(props: Props) {
                     onQuestionClick={onSetCurrentQuestion}
                     onQuestionEdit={onSubmitQuestionEdit}
                     points={question.points}
-                    mode={editMode ? "editing" : "unanswered"}
+                    mode={
+                      editMode
+                        ? "editing"
+                        : delayedCurrentQuestion === question.id
+                          ? "answering"
+                          : "unanswered"
+                    }
                   />
                 </Cell>
               ))}
