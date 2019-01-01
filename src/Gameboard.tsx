@@ -76,7 +76,10 @@ export function Gameboard(props: Props) {
           </div>
         )}
       </div>
-      <div className={styles.gameboard} ref={gameboardGrid}>
+      <div
+        className={editMode ? styles.gameboard : styles.gameboardPlaying}
+        ref={gameboardGrid}
+      >
         {categories.map((category, categoryIndex) => (
           <React.Fragment key={category.id}>
             <Cell row={1} column={categoryIndex + 1}>
