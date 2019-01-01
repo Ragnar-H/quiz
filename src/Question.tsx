@@ -130,13 +130,8 @@ export function Question(props: Props) {
         );
       case "answered":
         return null;
-      case "answering":
-        return (
-          <div className={styles.back} style={{ transform: "rotateX(0deg)" }}>
-            <p>{answer}</p>
-          </div>
-        );
       case "unanswered":
+      case "answering":
         return (
           <React.Fragment>
             <FlipCard
@@ -149,7 +144,7 @@ export function Question(props: Props) {
                   onQuestionClick
                 )
               }
-              pose={isFlipped ? "back" : "front"}
+              pose={isFlipped || mode === "answering" ? "back" : "front"}
             >
               <CardText text={points.toString()} />
             </FlipCard>
@@ -163,7 +158,7 @@ export function Question(props: Props) {
                 )
               }
               className={styles.back}
-              pose={isFlipped ? "front" : "back"}
+              pose={isFlipped || mode === "answering" ? "front" : "back"}
             >
               <CardText text={answer} />
             </FlipCard>
