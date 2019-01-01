@@ -1,7 +1,12 @@
 .container {
   height: 100vh;
   display: grid;
-  grid-template-rows: 1fr 9fr;
+  grid-template-rows: 1fr 8fr 1fr;
+  grid-template-columns: 6fr 1fr;
+  grid-template-areas: "controls buzzer"
+    "board buzzer"
+    "scores buzzer";
+  grid-gap: var(--medium-spacing);
   padding: 0 var(--medium-spacing);
 }
 
@@ -9,9 +14,11 @@
   display: flex;
   justify-content: center;
   padding-top: var(--medium-spacing);
+  grid-area: controls;
 }
 
 .gameboard {
+  grid-area: board;
   display: grid;
   grid-gap: var(--medium-spacing);
   grid-template-columns: repeat(6, 1fr);
@@ -21,4 +28,14 @@
 .gameboardPlaying {
   composes: gameboard;
   max-height: 100%;
+}
+
+.buzzer {
+  grid-area: buzzer;
+  background-color: mistyrose;
+}
+
+.scores {
+  grid-area: scores;
+  background-color: #bada55;
 }

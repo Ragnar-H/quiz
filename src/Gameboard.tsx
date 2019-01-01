@@ -120,6 +120,12 @@ export function Gameboard(props: Props) {
           </React.Fragment>
         ))}
       </div>
+      <div className={styles.buzzer}>
+        <p>buzz</p>
+      </div>
+      <div className={styles.scores}>
+        <p>scores</p>
+      </div>
     </div>
   );
 }
