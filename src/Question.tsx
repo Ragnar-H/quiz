@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import posed from "react-pose";
 import throttle from "lodash.throttle";
+import { timeline } from "popmotion";
 import styles from "./Question.module.css";
 import { useEditableInput } from "./useEditableInput";
-import { timeline } from "popmotion";
 
 export const FLIP_DURATION = 1000;
 interface Props {
