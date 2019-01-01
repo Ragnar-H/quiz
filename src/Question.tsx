@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import posed from "react-pose";
 import throttle from "lodash.throttle";
 import { timeline } from "popmotion";
+import { CardText } from "./CardText";
 import styles from "./Question.module.css";
 import { useEditableInput } from "./useEditableInput";
 
@@ -150,7 +151,7 @@ export function Question(props: Props) {
               }
               pose={isFlipped ? "back" : "front"}
             >
-              <p>{points}</p>
+              <CardText text={points.toString()} />
             </FlipCard>
             <FlipCard
               onClick={() =>
@@ -164,7 +165,7 @@ export function Question(props: Props) {
               className={styles.back}
               pose={isFlipped ? "front" : "back"}
             >
-              <p>{answer}</p>
+              <CardText text={answer} />
             </FlipCard>
           </React.Fragment>
         );
