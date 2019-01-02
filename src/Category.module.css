@@ -1,5 +1,5 @@
 .category {
-  flex: 1;
+  height: 100%;
   background-color: var(--base3);
   cursor: auto;
   text-align: center;

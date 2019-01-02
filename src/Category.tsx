@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Category.module.css";
 import { useEditableInput } from "./useEditableInput";
+import { CardText } from "./CardText";
 
 interface Props {
   categoryId: string;
@@ -41,7 +42,7 @@ export function Category(props: Props) {
           </React.Fragment>
         );
       case "answering":
-        return <p>{value.name}</p>;
+        return <CardText text={value.name} />;
     }
   };
 
