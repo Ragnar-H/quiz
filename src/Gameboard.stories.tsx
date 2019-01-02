@@ -36,6 +36,8 @@ function GameboardContainer(props: any) {
   const [currenAnsweringtUserId, setCurrentAnsweringUserId] = useState<
     string | null
   >(null);
+
+  const [buzzes, setBuzzes] = useState<IBuzz[]>(BUZZES);
   return (
     <Gameboard
       gameId="some-game-id"
@@ -46,9 +48,13 @@ function GameboardContainer(props: any) {
       onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
       onSubmitCategoryEdit={action("onSubmitCategoryEdit")}
       editMode={false}
-      buzzes={BUZZES}
+      buzzes={buzzes}
       currentAnsweringId={currenAnsweringtUserId}
       onSetCurrentAnsweringId={setCurrentAnsweringUserId}
+      onCorrectAnswer={(userId: string) => setBuzzes([])}
+      onWrongAnswer={(userId: string) =>
+        setBuzzes(buzzes.slice(0, buzzes.length - 1))
+      }
     />
   );
 }
@@ -67,6 +73,8 @@ storiesOf("Components/Gameboard", module)
       buzzes={BUZZES}
       currentAnsweringId="some-id"
       onSetCurrentAnsweringId={action("onSetCurrentAnweringId")}
+      onCorrectAnswer={action("onCorrectAnswer")}
+      onWrongAnswer={action("onWrongAnswer")}
     />
   ))
   .add("editing", () => (
@@ -82,6 +90,8 @@ storiesOf("Components/Gameboard", module)
       buzzes={[]}
       currentAnsweringId={null}
       onSetCurrentAnsweringId={action("onSetCurrentAnweringId")}
+      onCorrectAnswer={action("onCorrectAnswer")}
+      onWrongAnswer={action("onWrongAnswer")}
     />
   ))
   .add("answering", () => (
@@ -97,5 +107,7 @@ storiesOf("Components/Gameboard", module)
       buzzes={BUZZES}
       currentAnsweringId="some-id"
       onSetCurrentAnsweringId={action("onSetCurrentAnweringId")}
+      onCorrectAnswer={action("onCorrectAnswer")}
+      onWrongAnswer={action("onWrongAnswer")}
     />
   ));

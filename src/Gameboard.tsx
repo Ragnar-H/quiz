@@ -14,7 +14,10 @@ interface Props {
   gameId: string;
   currentQuestionId: string | null;
   currentAnsweringId: string | null;
+
   onSetCurrentAnsweringId: (userId: string) => void;
+  onCorrectAnswer: (userId: string) => void;
+  onWrongAnswer: (userId: string) => void;
   onSetCurrentQuestion: (questionId: string | null) => void;
   onSubmitQuestionEdit: (questionEdit: IQuestionEdit) => void;
   onSubmitCategoryEdit: (categoryEdit: ICategory) => void;
@@ -33,7 +36,9 @@ export function Gameboard(props: Props) {
     questions,
     buzzes,
     currentAnsweringId,
-    onSetCurrentAnsweringId
+    onSetCurrentAnsweringId,
+    onCorrectAnswer,
+    onWrongAnswer
   } = props;
 
   const gameboardGrid = useRef(null);
@@ -132,6 +137,8 @@ export function Gameboard(props: Props) {
           buzzes={buzzes}
           onSetCurrentAnsweringId={onSetCurrentAnsweringId}
           currentAnsweringId={currentAnsweringId}
+          onCorrectAnswer={onCorrectAnswer}
+          onWrongAnswer={onWrongAnswer}
         />
       </div>
       <div className={styles.scores}>

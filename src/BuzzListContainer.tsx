@@ -26,6 +26,12 @@ export class BuzzListContainer extends Component<Props> {
                   currentAnsweringId={userAnsweringId}
                   onSetCurrentAnsweringId={setUserAnsweringId}
                   buzzes={data}
+                  onCorrectAnswer={(userId: string) =>
+                    console.log("correct", userId)
+                  }
+                  onWrongAnswer={(userId: string) =>
+                    console.log("correct", userId)
+                  }
                 />
               )}
             </GameContext.Consumer>

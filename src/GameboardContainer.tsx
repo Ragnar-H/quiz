@@ -144,6 +144,8 @@ export function GameboardContainer(props: Props) {
             buzzes={[]}
             currentAnsweringId={userAnsweringId}
             onSetCurrentAnsweringId={setUserAnsweringId}
+            onCorrectAnswer={userId => console.log("got correct", { userId })}
+            onWrongAnswer={userId => console.log("got wrong", { userId })}
           />
         )
       )}

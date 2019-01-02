@@ -13,3 +13,10 @@
     background-color: var(--base7);
     border-radius: var(--medium-border-radius);
 }
+
+.controlsContainer {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    flex-direction: column;
+}
