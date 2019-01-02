@@ -35,7 +35,7 @@
 
 .buzzer {
   grid-area: buzzer;
-  background-color: mistyrose;
+  background-color: var(--base1);
 }
 
 .scores {
