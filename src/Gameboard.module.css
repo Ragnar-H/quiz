@@ -35,7 +35,9 @@
 
 .buzzer {
   grid-area: buzzer;
-  background-color: var(--base1);
+  border-radius: var(--small-border-radius);
+  border: 3px solid var(--base4);
+  margin: var(--medium-spacing) 0;
 }
 
 .scores {
