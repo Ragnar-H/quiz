@@ -4,6 +4,7 @@ import { Gameboard } from "./Gameboard";
 import { useCollection } from "./useCollection";
 import { FirebaseContext } from ".";
 import { useDocument } from "./useDocument";
+import { GameContext } from "./App";
 
 interface Props {
   gameId: string;
@@ -28,6 +29,7 @@ interface CategoryState {
 export function GameboardContainer(props: Props) {
   const { gameId } = props;
   const { firestore } = useContext(FirebaseContext);
+  const { userAnsweringId, setUserAnsweringId } = useContext(GameContext);
   const gamePath = `${GAME_PATH}${gameId}`;
   const categoryPath = `${gamePath}/${CATEGORY_PATH}`;
   const questionPath = `${gamePath}/${QUESTION_PATH}`;
@@ -139,6 +141,9 @@ export function GameboardContainer(props: Props) {
             gameId={gameId}
             questions={questionsState.questions}
             categories={categoryState.categories}
+            buzzes={[]}
+            currentAnsweringId={userAnsweringId}
+            onSetCurrentAnsweringId={setUserAnsweringId}
           />
         )
       )}

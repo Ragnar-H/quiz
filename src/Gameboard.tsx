@@ -5,12 +5,16 @@ import styles from "./Gameboard.module.css";
 import { Question, FLIP_DURATION } from "./Question";
 import { Category } from "./Category";
 import { ToggleLabel, Toggle } from "./Toggle";
+import { BuzzList } from "./BuzzList";
 
 interface Props {
   categories: Array<ICategory>;
   questions: Array<IQuestion>;
+  buzzes: Array<IBuzz>;
   gameId: string;
   currentQuestionId: string | null;
+  currentAnsweringId: string | null;
+  onSetCurrentAnsweringId: (userId: string) => void;
   onSetCurrentQuestion: (questionId: string | null) => void;
   onSubmitQuestionEdit: (questionEdit: IQuestionEdit) => void;
   onSubmitCategoryEdit: (categoryEdit: ICategory) => void;
@@ -26,7 +30,10 @@ export function Gameboard(props: Props) {
     onSetCurrentQuestion,
     onSubmitCategoryEdit,
     onSubmitQuestionEdit,
-    questions
+    questions,
+    buzzes,
+    currentAnsweringId,
+    onSetCurrentAnsweringId
   } = props;
 
   const gameboardGrid = useRef(null);
@@ -121,7 +128,11 @@ export function Gameboard(props: Props) {
         ))}
       </div>
       <div className={styles.buzzer}>
-        <p>buzz</p>
+        <BuzzList
+          buzzes={buzzes}
+          onSetCurrentAnsweringId={onSetCurrentAnsweringId}
+          currentAnsweringId={currentAnsweringId}
+        />
       </div>
       <div className={styles.scores}>
         <p>scores</p>

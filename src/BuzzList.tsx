@@ -26,6 +26,10 @@ export class BuzzList extends Component<Props> {
   };
 
   validateBuzzes = (buzzes: Array<IBuzz>) => {
+    if (buzzes.length === 0) {
+      return false;
+    }
+
     let isValid = true;
     buzzes.forEach(buzz => {
       if (!buzz.timestamp) {
