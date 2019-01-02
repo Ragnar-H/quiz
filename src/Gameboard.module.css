@@ -28,6 +28,9 @@
 .gameboardPlaying {
   composes: gameboard;
   max-height: 100%;
+  /* override min-height auto from grid */
+  min-height: 0;
+  height: auto;
 }
 
 .buzzer {

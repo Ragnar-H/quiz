@@ -1,6 +1,8 @@
 .cell {
   display: flex;
-  min-height: 100%;
+  /* override min-height auto from grid */
+  min-height: 0;
+
   justify-content: center;
   align-items: center;
   will-change: transform;
