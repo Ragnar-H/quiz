@@ -15,3 +15,9 @@ interface IQuestionEdit {
   answer: string;
   text: string;
 }
+interface IBuzz {
+  id: string;
+  username: string;
+  userId: string;
+  timestamp: any; //Something from firebase
+}

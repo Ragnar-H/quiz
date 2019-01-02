@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 
-interface Buzz {
-  id: string;
-  username: string;
-  userId: string;
-  timestamp: any; //Something from firebase
-}
-
 interface Props {
-  buzzes: Array<Buzz>;
+  buzzes: Array<IBuzz>;
   currentAnsweringId: string | null;
   onSetCurrentAnsweringId: (userId: string) => void;
 }
@@ -32,7 +25,7 @@ export class BuzzList extends Component<Props> {
     onSetCurrentAnsweringId(firstBuzz.userId);
   };
 
-  validateBuzzes = (buzzes: Array<Buzz>) => {
+  validateBuzzes = (buzzes: Array<IBuzz>) => {
     let isValid = true;
     buzzes.forEach(buzz => {
       if (!buzz.timestamp) {
