@@ -42,7 +42,7 @@ export function BuzzList(props: Props) {
     return isValid;
   };
 
-  if (buzzes.length === 0 || !validateBuzzes(buzzes)) {
+  if (!validateBuzzes(buzzes)) {
     return null;
   }
 
