@@ -1,0 +1,15 @@
+.buzzList {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20% 20%;
+    grid-auto-rows: 15%;
+    height: 100%;
+    overflow: scroll;
+    grid-gap: var(--medium-spacing);
+    padding: var(--small-spacing);
+}
+
+.buzzItem {
+    background-color: var(--base7);
+    border-radius: var(--medium-border-radius);
+}

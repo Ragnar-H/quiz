@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { CardText } from "./CardText";
+import styles from "./BuzzList.module.css";
 
 interface Props {
   buzzes: Array<IBuzz>;
@@ -43,10 +45,12 @@ export function BuzzList(props: Props) {
   );
 
   return (
-    <React.Fragment>
+    <div className={styles.buzzList}>
       {sortedBuzzes.map(buzz => (
-        <p key={buzz.id}>{buzz.username}</p>
+        <div key={buzz.id} className={styles.buzzItem}>
+          <CardText text={buzz.username} />
+        </div>
       ))}
-    </React.Fragment>
+    </div>
   );
 }
