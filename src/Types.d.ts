@@ -19,5 +19,5 @@ interface IBuzz {
   id: string;
   username: string;
   userId: string;
-  timestamp: any; //Something from firebase
+  timestamp: firebase.firestore.Timestamp;
 }

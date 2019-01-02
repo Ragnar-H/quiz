@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 
 interface Props {
   buzzes: Array<IBuzz>;
@@ -6,26 +6,29 @@ interface Props {
   onSetCurrentAnsweringId: (userId: string) => void;
 }
 
-export class BuzzList extends Component<Props> {
-  componentDidUpdate = (prevProps: Props) => {
-    const { buzzes, currentAnsweringId, onSetCurrentAnsweringId } = this.props;
-    if (!this.validateBuzzes(buzzes)) {
-      return;
-    }
-    const sortedBuzzes = buzzes
-      .slice()
-      .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
+export function BuzzList(props: Props) {
+  const { buzzes, currentAnsweringId, onSetCurrentAnsweringId } = props;
+  useEffect(
+    () => {
+      if (!validateBuzzes(buzzes)) {
+        return;
+      }
+      const sortedBuzzes = buzzes
+        .slice()
+        .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
 
-    const firstBuzz = sortedBuzzes[0];
+      const firstBuzz = sortedBuzzes[0];
 
-    if (currentAnsweringId && currentAnsweringId === firstBuzz.userId) {
-      // Its the same user. Lets not update everything
-      return;
-    }
-    onSetCurrentAnsweringId(firstBuzz.userId);
-  };
+      if (currentAnsweringId && currentAnsweringId === firstBuzz.userId) {
+        // Its the same user. Lets not update everything
+        return;
+      }
+      onSetCurrentAnsweringId(firstBuzz.userId);
+    },
+    [props.buzzes, props.currentAnsweringId]
+  );
 
-  validateBuzzes = (buzzes: Array<IBuzz>) => {
+  const validateBuzzes = (buzzes: Array<IBuzz>) => {
     if (buzzes.length === 0) {
       return false;
     }
@@ -39,17 +42,15 @@ export class BuzzList extends Component<Props> {
     return isValid;
   };
 
-  render() {
-    const { buzzes } = this.props;
-    if (buzzes.length === 0 || !this.validateBuzzes(buzzes)) {
-      return null;
-    }
-    return (
-      <React.Fragment>
-        {buzzes.map(buzz => (
-          <p key={buzz.id}>{buzz.username}</p>
-        ))}
-      </React.Fragment>
-    );
+  if (buzzes.length === 0 || !validateBuzzes(buzzes)) {
+    return null;
   }
+
+  return (
+    <React.Fragment>
+      {buzzes.map(buzz => (
+        <p key={buzz.id}>{buzz.username}</p>
+      ))}
+    </React.Fragment>
+  );
 }

@@ -3,25 +3,29 @@ import { storiesOf } from "@storybook/react";
 import { Gameboard } from "./Gameboard";
 import { Questions, Categories } from "./devQuestions";
 import { action } from "@storybook/addon-actions";
+import { firestore } from "firebase";
 
+const firstTimestamp = new firestore.Timestamp(100000, 232);
+const secondTimestamp = new firestore.Timestamp(200000, 232);
+const thirdTimestamp = new firestore.Timestamp(300000, 232);
 const BUZZES: IBuzz[] = [
+  {
+    id: "some-third-id",
+    username: "Loki",
+    userId: "Loki-user-id",
+    timestamp: thirdTimestamp
+  },
   {
     id: "some-buzz-id",
     username: "Betty (the same)",
     userId: "some-user-id",
-    timestamp: Date.now()
+    timestamp: firstTimestamp
   },
   {
     id: "some-other-id",
     username: "Betty (the same)",
     userId: "some-user-id",
-    timestamp: Date.now()
-  },
-  {
-    id: "some-third-id",
-    username: "Loki",
-    userId: "Loki-user-id",
-    timestamp: Date.now()
+    timestamp: secondTimestamp
   }
 ];
 
