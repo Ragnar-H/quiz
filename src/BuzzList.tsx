@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { CardText } from "./CardText";
+import posed, { PoseGroup } from "react-pose";
 import styles from "./BuzzList.module.css";
+import { CardText } from "./CardText";
 
 interface Props {
   buzzes: Array<IBuzz>;
@@ -9,6 +10,11 @@ interface Props {
   onCorrectAnswer: (userId: string) => void;
   onWrongAnswer: (userId: string) => void;
 }
+
+const Box = posed.div({
+  enter: { y: 0, opacity: 1 },
+  exit: { y: 50, opacity: 0 }
+});
 
 const validateBuzzes = (buzzes: Array<IBuzz>) => {
   if (buzzes.length === 0) {
@@ -71,11 +77,13 @@ export function BuzzList(props: Props) {
           X
         </button>
       </div>
-      {sortedBuzzes.map(buzz => (
-        <div key={buzz.id} className={styles.buzzItem}>
-          <CardText text={buzz.username} />
-        </div>
-      ))}
+      <PoseGroup>
+        {sortedBuzzes.map(buzz => (
+          <Box key={buzz.id} className={styles.buzzItem}>
+            <CardText text={buzz.username} />
+          </Box>
+        ))}
+      </PoseGroup>
     </div>
   );
 }

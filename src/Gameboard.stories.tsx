@@ -8,6 +8,19 @@ import { firestore } from "firebase";
 const firstTimestamp = new firestore.Timestamp(100000, 232);
 const secondTimestamp = new firestore.Timestamp(200000, 232);
 const thirdTimestamp = new firestore.Timestamp(300000, 232);
+
+function createBuzzes() {
+  let currentId = 0;
+  return function createBuzz(): IBuzz {
+    currentId++;
+    return {
+      id: `some-id-${currentId}`,
+      username: "Stephen",
+      userId: "stephens-id",
+      timestamp: thirdTimestamp
+    };
+  };
+}
 const BUZZES: IBuzz[] = [
   {
     id: "some-third-id",
@@ -29,6 +42,8 @@ const BUZZES: IBuzz[] = [
   }
 ];
 
+const buzzCreator = createBuzzes();
+
 function GameboardContainer(props: any) {
   const [currentQuestionId, setCurrentQuestionId] = useState<string | null>(
     null
@@ -39,23 +54,28 @@ function GameboardContainer(props: any) {
 
   const [buzzes, setBuzzes] = useState<IBuzz[]>(BUZZES);
   return (
-    <Gameboard
-      gameId="some-game-id"
-      categories={Categories}
-      questions={Questions}
-      currentQuestionId={currentQuestionId}
-      onSetCurrentQuestion={setCurrentQuestionId}
-      onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
-      onSubmitCategoryEdit={action("onSubmitCategoryEdit")}
-      editMode={false}
-      buzzes={buzzes}
-      currentAnsweringId={currenAnsweringtUserId}
-      onSetCurrentAnsweringId={setCurrentAnsweringUserId}
-      onCorrectAnswer={(userId: string) => setBuzzes([])}
-      onWrongAnswer={(userId: string) =>
-        setBuzzes(buzzes.slice(0, buzzes.length - 1))
-      }
-    />
+    <div>
+      <button onClick={() => setBuzzes([...buzzes, buzzCreator()])}>
+        Add buzz
+      </button>
+      <Gameboard
+        gameId="some-game-id"
+        categories={Categories}
+        questions={Questions}
+        currentQuestionId={currentQuestionId}
+        onSetCurrentQuestion={setCurrentQuestionId}
+        onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
+        onSubmitCategoryEdit={action("onSubmitCategoryEdit")}
+        editMode={false}
+        buzzes={buzzes}
+        currentAnsweringId={currenAnsweringtUserId}
+        onSetCurrentAnsweringId={setCurrentAnsweringUserId}
+        onCorrectAnswer={(userId: string) => setBuzzes([])}
+        onWrongAnswer={(userId: string) =>
+          setBuzzes(buzzes.slice(0, buzzes.length - 1))
+        }
+      />
+    </div>
   );
 }
 storiesOf("Components/Gameboard", module)
