@@ -219,6 +219,9 @@ export function GameboardContainer(props: Props) {
 
     const userDocRef = firestore.collection(playerPath).doc(userId);
     const currentUserBuzzesRef = firestore.collection(buzzesPath).doc(buzzId);
+    const currentQuestionRef = firestore
+      .collection(questionPath)
+      .doc(currentQuestionState.currentQuestionId);
 
     await firestore.runTransaction(transaction => {
       return Promise.all([
@@ -234,7 +237,9 @@ export function GameboardContainer(props: Props) {
           var newScore = currentScore + scoreDiff;
           transaction.update(userDocRef, { score: newScore });
         }),
-        transaction.update(currentUserBuzzesRef, { deleted: true })
+        transaction.update(currentUserBuzzesRef, { deleted: true }),
+        positive &&
+          transaction.update(currentQuestionRef, { status: "answered" })
       ]);
     });
   };

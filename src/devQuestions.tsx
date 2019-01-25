@@ -56,7 +56,8 @@ function createInitialQuestions(
         answer: INITIAL_ANSWER_TEXT,
         category: category.id,
         points: QUESTION_POINT_ARRAY[i],
-        id: `${category.id}-question-${i}`
+        id: `${category.id}-question-${i}`,
+        status: "unanswered"
       });
     }
   });

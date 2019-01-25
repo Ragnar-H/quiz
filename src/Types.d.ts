@@ -8,6 +8,7 @@ interface IQuestion {
   text: string;
   category: string;
   points: number;
+  status: "answered" | "answering" | "unanswered";
 }
 
 interface IQuestionEdit {
