@@ -3,6 +3,7 @@ import "./App.css";
 import { SignUpContainer } from "./SignUpContainer";
 import { GameCreatorContainer } from "./GameCreatorContainer";
 import { GameboardContainer } from "./GameboardContainer";
+import { BuzzerContainer } from "./BuzzerContainer";
 
 export type Roles = "host" | "player";
 
@@ -82,6 +83,7 @@ class App extends Component<Props, State> {
   render() {
     const { gameId, role } = this.state;
     const isHost = role === "host";
+    const isPlayer = role === "player";
     return (
       <GameContext.Provider value={this.state}>
         <div className="App">
@@ -103,6 +105,7 @@ class App extends Component<Props, State> {
           ) : (
             <UserContext.Provider value={this.state}>
               {isHost && <GameboardContainer gameId={gameId} />}
+              {isPlayer && <BuzzerContainer gameId={gameId} />}
             </UserContext.Provider>
           )}
         </div>
