@@ -26,15 +26,17 @@ export function QuestionsContainer(props: Props) {
   });
 
   const mapSnapshotToQuestions = (
-    snapshot: firebase.firestore.QuerySnapshot
+    snapshot: firebase.firestore.QuerySnapshot | null
   ) => {
     setQuestions({
       isLoading: false,
       error: null,
-      questions: snapshot.docs.map((doc: any) => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+      questions: snapshot
+        ? snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+        : []
     });
   };
 

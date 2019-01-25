@@ -3,7 +3,7 @@ import { FirebaseContext } from ".";
 
 export function useCollection(
   query: string | null,
-  callback: (value: firebase.firestore.QuerySnapshot) => void,
+  callback: (value: firebase.firestore.QuerySnapshot | null) => void,
   filter:
     | { property: string; operator: ">" | "<" | "=="; value: any }
     | undefined
@@ -16,6 +16,7 @@ export function useCollection(
   useEffect(
     () => {
       if (query === null) {
+        callback(null);
         return; //We're unsubscribing
       }
       const unsubscribe = filter

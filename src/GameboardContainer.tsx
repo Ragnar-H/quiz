@@ -84,14 +84,18 @@ export function GameboardContainer(props: Props) {
     isLoading: true
   });
 
-  const mapSnapshotToPlayers = (snapshot: firebase.firestore.QuerySnapshot) => {
+  const mapSnapshotToPlayers = (
+    snapshot: firebase.firestore.QuerySnapshot | null
+  ) => {
     setPlayers({
       isLoading: false,
       error: null,
-      players: snapshot.docs.map((doc: any) => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+      players: snapshot
+        ? snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+        : null
     });
   };
 
@@ -107,50 +111,57 @@ export function GameboardContainer(props: Props) {
   };
 
   const mapSnapshotToQuestions = (
-    snapshot: firebase.firestore.QuerySnapshot
+    snapshot: firebase.firestore.QuerySnapshot | null
   ) => {
     setQuestions({
       isLoading: false,
       error: null,
-      questions: snapshot.docs.map((doc: any) => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+      questions: snapshot
+        ? snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+        : null
     });
   };
 
   const mapSnapshotToCategories = (
-    snapshot: firebase.firestore.QuerySnapshot
+    snapshot: firebase.firestore.QuerySnapshot | null
   ) => {
     setCategories({
       isLoading: false,
       error: null,
-      categories: snapshot.docs.map((doc: any) => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+      categories: snapshot
+        ? snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+        : null
     });
   };
 
-  const mapSnapshotToBuzzes = (snapshot: firebase.firestore.QuerySnapshot) => {
+  const mapSnapshotToBuzzes = (
+    snapshot: firebase.firestore.QuerySnapshot | null
+  ) => {
     setBuzzes({
       isLoading: false,
       error: null,
-      buzzes: snapshot.docs.map((doc: any) => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+      buzzes: snapshot
+        ? snapshot.docs.map((doc: any) => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+        : null
     });
   };
 
-  const handleSetCurrentQuestion = (questionId: string | null) => {
+  const handleSetCurrentQuestion = (questionId: string | null) =>
     firestore
       .collection(GAME_PATH)
       .doc(gameId)
       .set({
         currentQuestionId: questionId
       });
-  };
 
   const handleSubmitQuestionEdit = (questionEdit: IQuestionEdit) => {
     const path = `${GAME_PATH}${gameId}/${QUESTION_PATH}`;
