@@ -15,6 +15,12 @@ interface Props {
   gameId: string;
 }
 
+interface BuzzesState {
+  buzzes: Array<IBuzz> | null;
+  error: string | null;
+  isLoading: boolean;
+}
+
 interface PlayersState {
   players: Array<IPlayer> | null;
   error: string | null;
@@ -45,6 +51,12 @@ export function GameboardContainer(props: Props) {
   const categoryPath = `${gamePath}/${CATEGORY_PATH}`;
   const questionPath = `${gamePath}/${QUESTION_PATH}`;
   const playerPath = `${gamePath}/${PLAYER_PATH}`;
+
+  const [buzzesState, setBuzzes] = useState<BuzzesState>({
+    buzzes: null,
+    error: null,
+    isLoading: false
+  });
 
   const [playersState, setPlayers] = useState<PlayersState>({
     players: null,
@@ -120,6 +132,17 @@ export function GameboardContainer(props: Props) {
     });
   };
 
+  const mapSnapshotToBuzzes = (snapshot: firebase.firestore.QuerySnapshot) => {
+    setBuzzes({
+      isLoading: false,
+      error: null,
+      buzzes: snapshot.docs.map((doc: any) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+    });
+  };
+
   const handleSetCurrentQuestion = (questionId: string | null) => {
     firestore
       .collection(GAME_PATH)
@@ -155,6 +178,14 @@ export function GameboardContainer(props: Props) {
   useCollection(categoryPath, mapSnapshotToCategories);
   useDocument(gamePath, mapSnapshotToCurrentQuestion);
 
+  let buzzesPath = null;
+  if (currentQuestionState.currentQuestionId) {
+    buzzesPath = `${GAME_PATH}${gameId}/${QUESTION_PATH}${
+      currentQuestionState.currentQuestionId
+    }/buzzes`;
+  }
+
+  useCollection(buzzesPath, mapSnapshotToBuzzes);
   return (
     <React.Fragment>
       {categoryState.isLoading ? (
@@ -173,7 +204,7 @@ export function GameboardContainer(props: Props) {
             questions={questionsState.questions}
             players={playersState.players}
             categories={categoryState.categories}
-            buzzes={[]}
+            buzzes={buzzesState.buzzes}
             currentAnsweringId={userAnsweringId}
             onSetCurrentAnsweringId={setUserAnsweringId}
             onCorrectAnswer={userId => console.log("got correct", { userId })}

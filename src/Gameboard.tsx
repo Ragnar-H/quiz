@@ -11,7 +11,7 @@ import { ScoreList } from "./ScoreList";
 interface Props {
   categories: Array<ICategory>;
   questions: Array<IQuestion>;
-  buzzes: Array<IBuzz>;
+  buzzes: Array<IBuzz> | null;
   players: Array<IPlayer>;
   gameId: string;
   currentQuestionId: string | null;
@@ -137,7 +137,7 @@ export function Gameboard(props: Props) {
       </div>
       <div className={styles.buzzer}>
         <BuzzList
-          buzzes={buzzes}
+          buzzes={buzzes || []}
           onSetCurrentAnsweringId={onSetCurrentAnsweringId}
           currentAnsweringId={currentAnsweringId}
           onCorrectAnswer={onCorrectAnswer}

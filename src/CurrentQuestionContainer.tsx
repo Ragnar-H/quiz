@@ -43,12 +43,7 @@ export class CurrentQuestionContainer extends Component<Props, State> {
                           {role === "player" &&
                             username != null &&
                             userId != null && (
-                              <BuzzerContainer
-                                username={username}
-                                userId={userId}
-                                questionId={data.currentQuestionId}
-                                gameId={gameId}
-                              />
+                              <BuzzerContainer gameId={gameId} />
                             )}
                         </React.Fragment>
                       )}
