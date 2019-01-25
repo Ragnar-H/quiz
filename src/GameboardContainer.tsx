@@ -1,5 +1,10 @@
 import React, { useState, useContext } from "react";
-import { GAME_PATH, CATEGORY_PATH, QUESTION_PATH } from "./firebasePaths";
+import {
+  GAME_PATH,
+  CATEGORY_PATH,
+  QUESTION_PATH,
+  PLAYER_PATH
+} from "./firebasePaths";
 import { Gameboard } from "./Gameboard";
 import { useCollection } from "./useCollection";
 import { FirebaseContext } from ".";
@@ -8,6 +13,12 @@ import { GameContext } from "./App";
 
 interface Props {
   gameId: string;
+}
+
+interface PlayersState {
+  players: Array<IPlayer> | null;
+  error: string | null;
+  isLoading: boolean;
 }
 
 interface CurrentQuestionState {
@@ -33,6 +44,13 @@ export function GameboardContainer(props: Props) {
   const gamePath = `${GAME_PATH}${gameId}`;
   const categoryPath = `${gamePath}/${CATEGORY_PATH}`;
   const questionPath = `${gamePath}/${QUESTION_PATH}`;
+  const playerPath = `${gamePath}/${PLAYER_PATH}`;
+
+  const [playersState, setPlayers] = useState<PlayersState>({
+    players: null,
+    error: null,
+    isLoading: true
+  });
 
   const [categoryState, setCategories] = useState<CategoryState>({
     categories: null,
@@ -53,6 +71,17 @@ export function GameboardContainer(props: Props) {
     error: null,
     isLoading: true
   });
+
+  const mapSnapshotToPlayers = (snapshot: firebase.firestore.QuerySnapshot) => {
+    setPlayers({
+      isLoading: false,
+      error: null,
+      players: snapshot.docs.map((doc: any) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+    });
+  };
 
   const mapSnapshotToCurrentQuestion = (
     snapshot: firebase.firestore.DocumentSnapshot
@@ -121,6 +150,7 @@ export function GameboardContainer(props: Props) {
       });
   };
 
+  useCollection(playerPath, mapSnapshotToPlayers);
   useCollection(questionPath, mapSnapshotToQuestions);
   useCollection(categoryPath, mapSnapshotToCategories);
   useDocument(gamePath, mapSnapshotToCurrentQuestion);
@@ -131,7 +161,8 @@ export function GameboardContainer(props: Props) {
         <p>Loading</p>
       ) : (
         categoryState.categories &&
-        questionsState.questions && (
+        questionsState.questions &&
+        playersState.players && (
           <Gameboard
             editMode={true}
             onSetCurrentQuestion={handleSetCurrentQuestion}
@@ -140,6 +171,7 @@ export function GameboardContainer(props: Props) {
             currentQuestionId={currentQuestionState.currentQuestionId}
             gameId={gameId}
             questions={questionsState.questions}
+            players={playersState.players}
             categories={categoryState.categories}
             buzzes={[]}
             currentAnsweringId={userAnsweringId}

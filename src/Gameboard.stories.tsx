@@ -21,6 +21,30 @@ function createBuzzes() {
     };
   };
 }
+
+const PLAYERS: IPlayer[] = [
+  {
+    id: "Loki-user-id",
+    username: "Loki",
+    score: 300
+  },
+  {
+    id: "some-user-id",
+    username: "Betty",
+    score: 400
+  },
+  {
+    id: "some-other-id",
+    username: "Jackie",
+    score: 700
+  },
+  {
+    id: "yet-another-id",
+    username: "Paul",
+    score: 4300
+  }
+];
+
 const BUZZES: IBuzz[] = [
   {
     id: "some-third-id",
@@ -62,6 +86,7 @@ function GameboardContainer(props: any) {
         gameId="some-game-id"
         categories={Categories}
         questions={Questions}
+        players={PLAYERS}
         currentQuestionId={currentQuestionId}
         onSetCurrentQuestion={setCurrentQuestionId}
         onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
@@ -85,6 +110,7 @@ storiesOf("Components/Gameboard", module)
       gameId="some-game-id"
       categories={Categories}
       questions={Questions}
+      players={PLAYERS}
       currentQuestionId={null}
       onSetCurrentQuestion={action("onSetCurrentQuestion")}
       onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
@@ -102,6 +128,7 @@ storiesOf("Components/Gameboard", module)
       gameId="some-game-id"
       categories={Categories}
       questions={Questions}
+      players={PLAYERS}
       currentQuestionId={null}
       onSetCurrentQuestion={action("onSetCurrentQuestion")}
       onSubmitQuestionEdit={action("onSubmitQuestionEdit")}
@@ -119,6 +146,7 @@ storiesOf("Components/Gameboard", module)
       gameId="some-game-id"
       categories={Categories}
       questions={Questions}
+      players={PLAYERS}
       currentQuestionId="category-3-question-0"
       onSetCurrentQuestion={action("onSetCurrentQuestion")}
       onSubmitQuestionEdit={action("onSubmitQuestionEdit")}

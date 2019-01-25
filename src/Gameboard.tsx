@@ -6,11 +6,13 @@ import { Question, FLIP_DURATION } from "./Question";
 import { Category } from "./Category";
 import { ToggleLabel, Toggle } from "./Toggle";
 import { BuzzList } from "./BuzzList";
+import { ScoreList } from "./ScoreList";
 
 interface Props {
   categories: Array<ICategory>;
   questions: Array<IQuestion>;
   buzzes: Array<IBuzz>;
+  players: Array<IPlayer>;
   gameId: string;
   currentQuestionId: string | null;
   currentAnsweringId: string | null;
@@ -142,7 +144,7 @@ export function Gameboard(props: Props) {
         />
       </div>
       <div className={styles.scores}>
-        <p>scores</p>
+        <ScoreList players={props.players} />
       </div>
     </div>
   );

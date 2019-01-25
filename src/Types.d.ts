@@ -21,3 +21,9 @@ interface IBuzz {
   userId: string;
   timestamp: firebase.firestore.Timestamp;
 }
+
+interface IPlayer {
+  username: string;
+  id: string;
+  score: number;
+}
