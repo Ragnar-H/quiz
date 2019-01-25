@@ -127,7 +127,7 @@ export function Gameboard(props: Props) {
                         ? "editing"
                         : delayedCurrentQuestion === question.id
                           ? "answering"
-                          : "unanswered"
+                          : question.status
                     }
                   />
                 </Cell>
