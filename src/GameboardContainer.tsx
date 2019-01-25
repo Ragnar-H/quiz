@@ -173,6 +173,46 @@ export function GameboardContainer(props: Props) {
       });
   };
 
+  const sumPoints = async ({
+    userId,
+    positive
+  }: {
+    userId: string;
+    positive: boolean;
+  }) => {
+    if (!currentQuestionState.currentQuestionId) {
+      throw new Error("Trying to give points without a question");
+    }
+    if (!questionsState.questions) {
+      throw new Error("Trying to give points without a list of questions");
+    }
+
+    const currentQuestion = questionsState.questions.find(
+      question => question.id === currentQuestionState.currentQuestionId
+    );
+
+    if (!currentQuestion) {
+      throw new Error("Trying to give points to question that is not found");
+    }
+
+    const sfDocRef = firestore.collection(playerPath).doc(userId);
+
+    firestore.runTransaction(transaction => {
+      return transaction.get(sfDocRef).then(function(sfDoc) {
+        if (!sfDoc.exists) {
+          throw "Document does not exist!";
+        }
+
+        const currentPlayerData = sfDoc.data();
+        const currentScore =
+          (currentPlayerData && currentPlayerData.score) || 0;
+        const scoreDiff = currentQuestion.points * (positive ? 1 : -1);
+        var newScore = currentScore + scoreDiff;
+        transaction.update(sfDocRef, { score: newScore });
+      });
+    });
+  };
+
   useCollection(playerPath, mapSnapshotToPlayers);
   useCollection(questionPath, mapSnapshotToQuestions);
   useCollection(categoryPath, mapSnapshotToCategories);
@@ -207,8 +247,8 @@ export function GameboardContainer(props: Props) {
             buzzes={buzzesState.buzzes}
             currentAnsweringId={userAnsweringId}
             onSetCurrentAnsweringId={setUserAnsweringId}
-            onCorrectAnswer={userId => console.log("got correct", { userId })}
-            onWrongAnswer={userId => console.log("got wrong", { userId })}
+            onCorrectAnswer={userId => sumPoints({ userId, positive: true })}
+            onWrongAnswer={userId => sumPoints({ userId, positive: false })}
           />
         )
       )}
