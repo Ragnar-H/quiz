@@ -20,3 +20,11 @@
     justify-content: space-around;
     flex-direction: column;
 }
+
+.correct {
+    background-color: var(--positive)
+}
+
+.incorrect {
+    background-color: var(--negative)
+}

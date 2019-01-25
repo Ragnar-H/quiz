@@ -61,6 +61,7 @@ export function BuzzList(props: Props) {
     <div className={styles.buzzList}>
       <div className={styles.controlsContainer}>
         <button
+          className={styles.correct}
           onClick={() =>
             currentAnsweringId && onCorrectAnswer(currentAnsweringId)
           }
@@ -69,12 +70,13 @@ export function BuzzList(props: Props) {
           Correct!
         </button>
         <button
+          className={styles.incorrect}
           onClick={() =>
             currentAnsweringId && onWrongAnswer(currentAnsweringId)
           }
           disabled={!currentAnsweringId}
         >
-          X
+          Wrong!
         </button>
       </div>
       <PoseGroup>
