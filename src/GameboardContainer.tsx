@@ -173,11 +173,30 @@ export function GameboardContainer(props: Props) {
       });
   };
 
+  useCollection(playerPath, mapSnapshotToPlayers, undefined);
+  useCollection(questionPath, mapSnapshotToQuestions, undefined);
+  useCollection(categoryPath, mapSnapshotToCategories, undefined);
+  useDocument(gamePath, mapSnapshotToCurrentQuestion);
+
+  let buzzesPath: string | null = null;
+  if (currentQuestionState.currentQuestionId) {
+    buzzesPath = `${GAME_PATH}${gameId}/${QUESTION_PATH}${
+      currentQuestionState.currentQuestionId
+    }/buzzes`;
+  }
+  useCollection(buzzesPath, mapSnapshotToBuzzes, {
+    property: "deleted",
+    operator: "==",
+    value: false
+  });
+
   const sumPoints = async ({
     userId,
+    buzzId,
     positive
   }: {
     userId: string;
+    buzzId: string;
     positive: boolean;
   }) => {
     if (!currentQuestionState.currentQuestionId) {
@@ -185,6 +204,9 @@ export function GameboardContainer(props: Props) {
     }
     if (!questionsState.questions) {
       throw new Error("Trying to give points without a list of questions");
+    }
+    if (!buzzesPath) {
+      throw new Error("Trying to give points without buzz path");
     }
 
     const currentQuestion = questionsState.questions.find(
@@ -195,37 +217,27 @@ export function GameboardContainer(props: Props) {
       throw new Error("Trying to give points to question that is not found");
     }
 
-    const sfDocRef = firestore.collection(playerPath).doc(userId);
+    const userDocRef = firestore.collection(playerPath).doc(userId);
+    const currentUserBuzzesRef = firestore.collection(buzzesPath).doc(buzzId);
 
     firestore.runTransaction(transaction => {
-      return transaction.get(sfDocRef).then(function(sfDoc) {
-        if (!sfDoc.exists) {
-          throw "Document does not exist!";
-        }
+      return Promise.all([
+        transaction.get(userDocRef).then(function(sfDoc) {
+          if (!sfDoc.exists) {
+            throw "Document does not exist!";
+          }
 
-        const currentPlayerData = sfDoc.data();
-        const currentScore =
-          (currentPlayerData && currentPlayerData.score) || 0;
-        const scoreDiff = currentQuestion.points * (positive ? 1 : -1);
-        var newScore = currentScore + scoreDiff;
-        transaction.update(sfDocRef, { score: newScore });
-      });
+          const currentPlayerData = sfDoc.data();
+          const currentScore =
+            (currentPlayerData && currentPlayerData.score) || 0;
+          const scoreDiff = currentQuestion.points * (positive ? 1 : -1);
+          var newScore = currentScore + scoreDiff;
+          transaction.update(userDocRef, { score: newScore });
+        }),
+        transaction.update(currentUserBuzzesRef, { deleted: true })
+      ]);
     });
   };
-
-  useCollection(playerPath, mapSnapshotToPlayers);
-  useCollection(questionPath, mapSnapshotToQuestions);
-  useCollection(categoryPath, mapSnapshotToCategories);
-  useDocument(gamePath, mapSnapshotToCurrentQuestion);
-
-  let buzzesPath = null;
-  if (currentQuestionState.currentQuestionId) {
-    buzzesPath = `${GAME_PATH}${gameId}/${QUESTION_PATH}${
-      currentQuestionState.currentQuestionId
-    }/buzzes`;
-  }
-
-  useCollection(buzzesPath, mapSnapshotToBuzzes);
   return (
     <React.Fragment>
       {categoryState.isLoading ? (
@@ -247,8 +259,12 @@ export function GameboardContainer(props: Props) {
             buzzes={buzzesState.buzzes}
             currentAnsweringId={userAnsweringId}
             onSetCurrentAnsweringId={setUserAnsweringId}
-            onCorrectAnswer={userId => sumPoints({ userId, positive: true })}
-            onWrongAnswer={userId => sumPoints({ userId, positive: false })}
+            onCorrectAnswer={(userId: string, buzzId: string) =>
+              sumPoints({ userId, buzzId, positive: true })
+            }
+            onWrongAnswer={(userId: string, buzzId: string) =>
+              sumPoints({ userId, buzzId, positive: false })
+            }
           />
         )
       )}

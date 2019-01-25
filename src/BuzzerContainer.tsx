@@ -52,6 +52,7 @@ export function BuzzerContainer(props: Props) {
       .add({
         username,
         userId,
+        deleted: false,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       });
   };

@@ -7,8 +7,8 @@ interface Props {
   buzzes: Array<IBuzz>;
   currentAnsweringId: string | null;
   onSetCurrentAnsweringId: (userId: string) => void;
-  onCorrectAnswer: (userId: string) => void;
-  onWrongAnswer: (userId: string) => void;
+  onCorrectAnswer: (userId: string, buzzId: string) => void;
+  onWrongAnswer: (userId: string, buzzId: string) => void;
 }
 
 const Box = posed.div({
@@ -63,7 +63,8 @@ export function BuzzList(props: Props) {
         <button
           className={styles.correct}
           onClick={() =>
-            currentAnsweringId && onCorrectAnswer(currentAnsweringId)
+            currentAnsweringId &&
+            onCorrectAnswer(currentAnsweringId, sortedBuzzes[0].id)
           }
           disabled={!currentAnsweringId}
         >
@@ -72,7 +73,8 @@ export function BuzzList(props: Props) {
         <button
           className={styles.incorrect}
           onClick={() =>
-            currentAnsweringId && onWrongAnswer(currentAnsweringId)
+            currentAnsweringId &&
+            onWrongAnswer(currentAnsweringId, sortedBuzzes[0].id)
           }
           disabled={!currentAnsweringId}
         >

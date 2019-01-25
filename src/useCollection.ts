@@ -3,7 +3,10 @@ import { FirebaseContext } from ".";
 
 export function useCollection(
   query: string | null,
-  callback: (value: firebase.firestore.QuerySnapshot) => void
+  callback: (value: firebase.firestore.QuerySnapshot) => void,
+  filter:
+    | { property: string; operator: ">" | "<" | "=="; value: any }
+    | undefined
 ) {
   const { firestore } = useContext(FirebaseContext);
   const queryPath = useRef(query);
@@ -15,7 +18,12 @@ export function useCollection(
       if (query === null) {
         return; //We're unsubscribing
       }
-      const unsubscribe = firestore.collection(query).onSnapshot(callback);
+      const unsubscribe = filter
+        ? firestore
+            .collection(query)
+            .where(filter.property, filter.operator, filter.value)
+            .onSnapshot(callback)
+        : firestore.collection(query).onSnapshot(callback);
 
       return () => {
         unsubscribe();

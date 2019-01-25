@@ -38,7 +38,7 @@ export function QuestionsContainer(props: Props) {
     });
   };
 
-  useCollection(query, mapSnapshotToQuestions);
+  useCollection(query, mapSnapshotToQuestions, undefined);
 
   const handleSetCurrentQuestion = (questionId: string) => {
     firestore

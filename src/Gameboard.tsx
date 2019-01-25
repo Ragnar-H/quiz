@@ -18,8 +18,8 @@ interface Props {
   currentAnsweringId: string | null;
 
   onSetCurrentAnsweringId: (userId: string) => void;
-  onCorrectAnswer: (userId: string) => void;
-  onWrongAnswer: (userId: string) => void;
+  onCorrectAnswer: (userId: string, buzzId: string) => void;
+  onWrongAnswer: (userId: string, buzzId: string) => void;
   onSetCurrentQuestion: (questionId: string | null) => void;
   onSubmitQuestionEdit: (questionEdit: IQuestionEdit) => void;
   onSubmitCategoryEdit: (categoryEdit: ICategory) => void;
