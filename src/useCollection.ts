@@ -2,7 +2,7 @@ import { useEffect, useRef, useContext } from "react";
 import { FirebaseContext } from ".";
 
 export function useCollection(
-  query: string,
+  query: string | null,
   callback: (value: firebase.firestore.QuerySnapshot) => void
 ) {
   const { firestore } = useContext(FirebaseContext);
@@ -12,6 +12,9 @@ export function useCollection(
   }
   useEffect(
     () => {
+      if (query === null) {
+        return; //We're unsubscribing
+      }
       const unsubscribe = firestore.collection(query).onSnapshot(callback);
 
       return () => {
