@@ -10,7 +10,7 @@ export function ScoreList(props: Props) {
     <div className={styles.scoreList}>
       {props.players.map(player => (
         <div className={styles.scoreItem}>
-          <p>{player.score}</p>
+          <p>{player.score || 0}</p>
           <p>{player.username}</p>
         </div>
       ))}
