@@ -253,6 +253,7 @@ export function GameboardContainer(props: Props) {
           transaction.update(currentQuestionRef, { status: "answered" })
       ]);
     });
+    positive && (await handleSetCurrentQuestion(null));
   };
 
   return (
