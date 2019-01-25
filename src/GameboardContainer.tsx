@@ -220,7 +220,7 @@ export function GameboardContainer(props: Props) {
     const userDocRef = firestore.collection(playerPath).doc(userId);
     const currentUserBuzzesRef = firestore.collection(buzzesPath).doc(buzzId);
 
-    firestore.runTransaction(transaction => {
+    await firestore.runTransaction(transaction => {
       return Promise.all([
         transaction.get(userDocRef).then(function(sfDoc) {
           if (!sfDoc.exists) {
@@ -238,6 +238,7 @@ export function GameboardContainer(props: Props) {
       ]);
     });
   };
+
   return (
     <React.Fragment>
       {categoryState.isLoading ? (
