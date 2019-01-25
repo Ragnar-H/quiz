@@ -6,7 +6,8 @@
     height: 100%;
     overflow: scroll;
     grid-gap: var(--medium-spacing);
-    padding: var(--small-spacing);
+    padding: 0 var(--medium-spacing);
+    border-left: 3px solid var(--base4);
 }
 
 .buzzItem {
