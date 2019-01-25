@@ -47,6 +47,7 @@ export function GameboardContainer(props: Props) {
   const { gameId } = props;
   const { firestore } = useContext(FirebaseContext);
   const { userAnsweringId, setUserAnsweringId } = useContext(GameContext);
+
   const gamePath = `${GAME_PATH}${gameId}`;
   const categoryPath = `${gamePath}/${CATEGORY_PATH}`;
   const questionPath = `${gamePath}/${QUESTION_PATH}`;

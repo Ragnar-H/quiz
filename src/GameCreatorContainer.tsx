@@ -4,9 +4,11 @@ import { GameCreator } from "./GameCreator";
 import { GAME_PATH } from "./firebasePaths";
 import {
   loadInitialQuestionsToFirestore,
-  loadInitialCategoriesToFirestore
+  loadInitialCategoriesToFirestore,
+  createInitialCategories,
+  createInitialQuestions
 } from "./devQuestions";
-import { FirebaseContext } from ".";
+import { FirebaseContext, GameboardSizeContext } from ".";
 
 interface Props {
   onJoinGameAsHost: (gameId: string) => void;
@@ -15,9 +17,14 @@ interface Props {
 export function GameCreatorContainer(props: Props) {
   const { onJoinGameAsHost } = props;
   const { firestore } = useContext(FirebaseContext);
+  const { numberOfCategories, numberOfQuestions } = useContext(
+    GameboardSizeContext
+  );
 
   const handleGameCreation = async () => {
     const gameId = shortid.generate();
+    const categories = createInitialCategories(numberOfCategories);
+    const questions = createInitialQuestions(categories, numberOfQuestions);
     await firestore
       .collection(GAME_PATH)
       .doc(gameId)
@@ -28,8 +35,8 @@ export function GameCreatorContainer(props: Props) {
     onJoinGameAsHost(gameId);
 
     await Promise.all([
-      loadInitialCategoriesToFirestore(firestore, gameId),
-      loadInitialQuestionsToFirestore(firestore, gameId)
+      loadInitialCategoriesToFirestore(firestore, gameId, categories),
+      loadInitialQuestionsToFirestore(firestore, gameId, questions)
     ]);
   };
 

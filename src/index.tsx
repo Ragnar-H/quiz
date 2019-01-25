@@ -7,6 +7,13 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+export const NUMBER_OF_QUESTIONS = 3;
+export const NUMBER_OF_CATEGORIES = 4;
+const gameboardSize = {
+  numberOfCategories: NUMBER_OF_CATEGORIES,
+  numberOfQuestions: NUMBER_OF_QUESTIONS
+};
+
 const root = document.getElementById("root");
 if (root == null) {
   throw new Error("No root element found. App will not start");
@@ -29,10 +36,33 @@ export const FirebaseContext = React.createContext<{
   firestore: firebase.firestore.Firestore;
 }>({ firestore });
 
+export const GameboardSizeContext = React.createContext<{
+  numberOfCategories: number;
+  numberOfQuestions: number;
+}>(gameboardSize);
+
+document.addEventListener("DOMContentLoaded", () => {
+  document &&
+    document.documentElement &&
+    document.documentElement.style.setProperty(
+      "--number-of-questions",
+      NUMBER_OF_QUESTIONS.toString()
+    );
+
+  document &&
+    document.documentElement &&
+    document.documentElement.style.setProperty(
+      "--number-of-categories",
+      NUMBER_OF_CATEGORIES.toString()
+    );
+});
+
 ReactDOM.render(
   <FirebaseContext.Provider value={{ firestore }}>
     <FirestoreProvider firebase={firebase}>
-      <App />
+      <GameboardSizeContext.Provider value={gameboardSize}>
+        <App />
+      </GameboardSizeContext.Provider>
     </FirestoreProvider>
   </FirebaseContext.Provider>,
   root

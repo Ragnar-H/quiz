@@ -1,18 +1,23 @@
-import { GAME_PATH, QUESTION_PATH, CATEGORY_PATH } from "./firebasePaths";
+import { CATEGORY_PATH, GAME_PATH, QUESTION_PATH } from "./firebasePaths";
+import { NUMBER_OF_QUESTIONS, NUMBER_OF_CATEGORIES } from ".";
 
 const INITIAL_QUESTION_TEXT = "Fill in this question";
 const INITIAL_ANSWER_TEXT = "Fill in the answer";
 const QUESTION_POINT_ARRAY = [200, 400, 600, 800, 1000];
 
-export const Categories = createInitialCategories(6);
-export const Questions = createInitialQuestions(Categories, 5);
+export const Categories = createInitialCategories(NUMBER_OF_CATEGORIES);
+export const Questions = createInitialQuestions(
+  Categories,
+  NUMBER_OF_QUESTIONS
+);
 
 export async function loadInitialCategoriesToFirestore(
   firestore: firebase.firestore.Firestore,
-  gameId: string
+  gameId: string,
+  categories: Array<ICategory>
 ) {
   let writeBatch = firestore.batch();
-  Categories.forEach(category => {
+  categories.forEach(category => {
     const docRef = firestore
       .collection(`${GAME_PATH}${gameId}/${CATEGORY_PATH}`)
       .doc(category.id);
@@ -23,11 +28,12 @@ export async function loadInitialCategoriesToFirestore(
 
 export async function loadInitialQuestionsToFirestore(
   firestore: firebase.firestore.Firestore,
-  gameId: string
+  gameId: string,
+  questions: Array<IQuestion>
 ) {
   let writeBatch = firestore.batch();
 
-  Questions.forEach(question => {
+  questions.forEach(question => {
     const docRef = firestore
       .collection(`${GAME_PATH}${gameId}/${QUESTION_PATH}`)
       .doc(question.id);
@@ -36,7 +42,9 @@ export async function loadInitialQuestionsToFirestore(
   await writeBatch.commit();
 }
 
-function createInitialCategories(nrOfCategories: number): Array<ICategory> {
+export function createInitialCategories(
+  nrOfCategories: number
+): Array<ICategory> {
   let categories = [];
   for (let i = 0; i < nrOfCategories; i++) {
     categories.push({ name: `Category ${i + 1}`, id: `category-${i}` });
@@ -44,7 +52,7 @@ function createInitialCategories(nrOfCategories: number): Array<ICategory> {
   return categories;
 }
 
-function createInitialQuestions(
+export function createInitialQuestions(
   categories: Array<ICategory>,
   nrOfQuestions: number
 ): Array<IQuestion> {

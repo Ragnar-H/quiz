@@ -21,8 +21,8 @@
   grid-area: board;
   display: grid;
   grid-gap: var(--medium-spacing);
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 1fr repeat(5, 2fr);
+  grid-template-columns: repeat(var(--number-of-categories), 1fr);
+  grid-template-rows: 1fr repeat(var(--number-of-questions), 2fr);
 }
 
 .gameboardPlaying {
