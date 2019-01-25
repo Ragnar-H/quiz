@@ -77,6 +77,7 @@ export function Gameboard(props: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.gameControls}>
+        <p>{`Join game at: ${props.gameId}`}</p>
         <Toggle
           labels={editLabels}
           initialLabel={initialEditMode ? editLabels[1] : editLabels[0]}
