@@ -16,20 +16,6 @@ const Box = posed.div({
   exit: { y: 50, opacity: 0 }
 });
 
-const validateBuzzes = (buzzes: Array<IBuzz>) => {
-  if (buzzes.length === 0) {
-    return false;
-  }
-
-  let isValid = true;
-  buzzes.forEach(buzz => {
-    if (!buzz.timestamp) {
-      isValid = false;
-    }
-  });
-  return isValid;
-};
-
 export function BuzzList(props: Props) {
   const {
     currentAnsweringId,
@@ -37,15 +23,17 @@ export function BuzzList(props: Props) {
     onCorrectAnswer,
     onWrongAnswer
   } = props;
-  if (!validateBuzzes(props.buzzes)) {
-    return null;
-  }
+
   const sortedBuzzes = props.buzzes
     .slice()
+    .filter(buzz => !!buzz.timestamp)
     .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
 
   useEffect(
     () => {
+      if (sortedBuzzes.length === 0) {
+        return;
+      }
       const firstBuzz = sortedBuzzes[0];
 
       if (currentAnsweringId && currentAnsweringId === firstBuzz.userId) {
