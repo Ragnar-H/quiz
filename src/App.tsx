@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import { PlayersContainer } from "./PlayersContainer";
 import { SignUpContainer } from "./SignUpContainer";
-import { PlayerProfile } from "./PlayerProfile";
-import { CurrentQuestionContainer } from "./CurrentQuestionContainer";
 import { GameCreatorContainer } from "./GameCreatorContainer";
-import { CurrentAnsweringUser } from "./CurrentAnsweringUser";
 import { GameboardContainer } from "./GameboardContainer";
 
 export type Roles = "host" | "player";
@@ -84,39 +80,29 @@ class App extends Component<Props, State> {
   };
 
   render() {
-    const { gameId, username, role, userAnsweringId } = this.state;
+    const { gameId, role } = this.state;
     const isHost = role === "host";
     return (
       <GameContext.Provider value={this.state}>
         <div className="App">
-          <GameCreatorContainer
-            onJoinGameAsHost={(gameId: string) => this.setGame(gameId, "host")}
-          />
-          <SignUpContainer
-            onJoinGame={(username: string, userId: string, gameId: string) =>
-              this.handleJoinGame(username, userId, "player", gameId)
-            }
-          />
-
-          {gameId && (
+          {!gameId ? (
+            <div>
+              <GameCreatorContainer
+                onJoinGameAsHost={(gameId: string) =>
+                  this.setGame(gameId, "host")
+                }
+              />
+              <SignUpContainer
+                onJoinGame={(
+                  username: string,
+                  userId: string,
+                  gameId: string
+                ) => this.handleJoinGame(username, userId, "player", gameId)}
+              />
+            </div>
+          ) : (
             <UserContext.Provider value={this.state}>
-              <h1>GameId : {gameId}</h1>
-
               {isHost && <GameboardContainer gameId={gameId} />}
-
-              <PlayersContainer gameId={gameId} />
-
-              {username && (
-                <React.Fragment>
-                  <h1>PlayerProfile</h1>
-                  <PlayerProfile />
-                </React.Fragment>
-              )}
-              <h1>Current Question</h1>
-              <CurrentQuestionContainer gameId={gameId} />
-              {userAnsweringId && (
-                <CurrentAnsweringUser userId={userAnsweringId} />
-              )}
             </UserContext.Provider>
           )}
         </div>
